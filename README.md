@@ -2,11 +2,11 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-blue)
 
-This is a simple example bot built to demonstrate how to integrate and use **[Disckit](https://pypi.org/project/disckit/)** in a Python Discord bot project.
+This is a simple example bot built to demonstrate how to integrate and use **[disckit](https://pypi.org/project/disckit/)** in a Python Discord bot project.
 
 ## 💡 What is this?
 
-This repository provides a reference implementation for using Disckit in a clean, minimal setup. It’s recommended for developers already familiar with or using the `discord.py` (dpy) library.
+This repository provides a reference implementation for using disckit in a clean, minimal setup. It’s recommended for developers already familiar with or using the `discord.py` (dpy) library.
 
 ## 📦 Requirements
 
