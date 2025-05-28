@@ -1,0 +1,287 @@
+"""
+This module defines the `MentionTree` class, which extends `app_commands.CommandTree` to provide custom behavior
+for managing and retrieving mentions of application commands.
+
+Classes:
+--------
+- MentionTree: A custom command tree that stores and retrieves mentions for application commands.
+
+Methods:
+--------
+- __init__(*args: Any, **kwargs: Any) -> None:
+    Initializes the `MentionTree` instance with custom attributes for caching commands and mentions.
+
+- sync(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+    Synchronizes commands and stores them in the internal cache.
+
+- fetch_commands(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+    Fetches commands from Discord and updates the internal cache.
+
+- get_or_fetch_commands(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+    Retrieves commands from the cache or fetches them if not available.
+
+- find_mention_for(command: app_commands.Command | commands.HybridCommand | str, *, guild: Optional[discord.abc.Snowflake] = None) -> Optional[str]:
+    Finds the mention for a specific command, optionally scoped to a guild.
+
+- _walk_children(commands: list[app_commands.Group | app_commands.Command]) -> Generator[app_commands.Command, None, None]:
+    Recursively iterates over child commands in a group.
+
+- walk_mentions(*, guild: Optional[discord.abc.Snowflake] = None) -> AsyncIterator[tuple[app_commands.Command, str]]:
+    Retrieves all valid mentions for application commands in a specific guild.
+"""
+
+from logging import getLogger
+from typing import Any, AsyncIterator, Generator, Optional
+
+import discord
+from discord import app_commands
+from discord.ext import commands
+
+__all__ = ("MentionTree",)
+_log = getLogger(__name__)
+
+
+class MentionTree(app_commands.CommandTree):
+    """
+    A custom command tree that stores and retrieves mentions for application commands.
+
+    Attributes:
+    -----------
+    application_commands : dict[Optional[int], list[app_commands.AppCommand]]
+        Stores application commands by guild ID.
+
+    cache : dict[Optional[int], dict[app_commands.Command | commands.HybridCommand | str, str]]
+        Caches mentions for commands by guild ID.
+
+    Methods:
+    --------
+    sync(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+        Synchronizes commands and stores them in the internal cache.
+
+    fetch_commands(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+        Fetches commands from Discord and updates the internal cache.
+
+    get_or_fetch_commands(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+        Retrieves commands from the cache or fetches them if not available.
+
+    find_mention_for(command: app_commands.Command | commands.HybridCommand | str, *, guild: Optional[discord.abc.Snowflake] = None) -> Optional[str]:
+        Finds the mention for a specific command, optionally scoped to a guild.
+
+    _walk_children(commands: list[app_commands.Group | app_commands.Command]) -> Generator[app_commands.Command, None, None]:
+        Recursively iterates over child commands in a group.
+
+    walk_mentions(*, guild: Optional[discord.abc.Snowflake] = None) -> AsyncIterator[tuple[app_commands.Command, str]]:
+        Retrieves all valid mentions for application commands in a specific guild.
+    """
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """
+        Initializes the `MentionTree` instance with custom attributes for caching commands and mentions.
+
+        Parameters:
+        -----------
+        *args : Any
+            Positional arguments passed to the parent class.
+
+        **kwargs : Any
+            Keyword arguments passed to the parent class.
+        """
+        super().__init__(*args, **kwargs)
+        self.application_commands: dict[
+            Optional[int], list[app_commands.AppCommand]
+        ] = {}
+        self.cache: dict[
+            Optional[int],
+            dict[app_commands.Command | commands.HybridCommand | str, str],
+        ] = {}
+
+    async def sync(
+        self, *, guild: Optional[discord.abc.Snowflake] = None
+    ) -> list[app_commands.AppCommand]:
+        """
+        Synchronizes commands and stores them in the internal cache.
+
+        Parameters:
+        -----------
+        guild : Optional[discord.abc.Snowflake]
+            The guild to synchronize commands for. If None, synchronizes global commands.
+
+        Returns:
+        --------
+        list[app_commands.AppCommand]
+            The synchronized commands.
+        """
+        ret = await super().sync(guild=guild)
+        guild_id = guild.id if guild else None
+        self.application_commands[guild_id] = ret
+        self.cache.pop(guild_id, None)
+        return ret
+
+    async def fetch_commands(
+        self, *, guild: Optional[discord.abc.Snowflake] = None
+    ) -> list[app_commands.AppCommand]:
+        """
+        Fetches commands from Discord and updates the internal cache.
+
+        Parameters:
+        -----------
+        guild : Optional[discord.abc.Snowflake]
+            The guild to fetch commands for. If None, fetches global commands.
+
+        Returns:
+        --------
+        list[app_commands.AppCommand]
+            The fetched commands.
+        """
+        ret = await super().fetch_commands(guild=guild)
+        guild_id = guild.id if guild else None
+        self.application_commands[guild_id] = ret
+        self.cache.pop(guild_id, None)
+        return ret
+
+    async def get_or_fetch_commands(
+        self, *, guild: Optional[discord.abc.Snowflake] = None
+    ) -> list[app_commands.AppCommand]:
+        """
+        Retrieves commands from the cache or fetches them if not available.
+
+        Parameters:
+        -----------
+        guild : Optional[discord.abc.Snowflake]
+            The guild to retrieve commands for. If None, retrieves global commands.
+
+        Returns:
+        --------
+        list[app_commands.AppCommand]
+            The retrieved or fetched commands.
+        """
+        try:
+            return self.application_commands[guild.id if guild else None]
+        except KeyError:
+            return await self.fetch_commands(guild=guild)
+
+    async def find_mention_for(
+        self,
+        command: app_commands.Command | commands.HybridCommand | str,
+        *,
+        guild: Optional[discord.abc.Snowflake] = None,
+    ) -> Optional[str]:
+        """
+        Finds the mention for a specific command, optionally scoped to a guild.
+
+        Parameters:
+        -----------
+        command : app_commands.Command | commands.HybridCommand | str
+            The command to find the mention for.
+
+        guild : Optional[discord.abc.Snowflake]
+            The guild to scope the search to. If None, searches globally.
+
+        Returns:
+        --------
+        Optional[str]
+            The mention for the command, if found.
+        """
+        guild_id = guild.id if guild else None
+        try:
+            return self.cache[guild_id][command]
+        except KeyError:
+            pass
+
+        check_global = self.fallback_to_global is True and guild is not None
+
+        if isinstance(command, str):
+            _command = discord.utils.get(
+                self.walk_commands(guild=guild), qualified_name=command
+            )
+
+            if check_global and not _command:
+                _command = discord.utils.get(
+                    self.walk_commands(), qualified_name=command
+                )
+
+        else:
+            _command = command
+
+        if not _command:
+            return None
+
+        local_commands = await self.get_or_fetch_commands(guild=guild)
+        app_command_found = discord.utils.get(
+            local_commands, name=(_command.root_parent or _command).name
+        )
+
+        if check_global and not app_command_found:
+            global_commands = await self.get_or_fetch_commands(guild=None)
+            app_command_found = discord.utils.get(
+                global_commands, name=(_command.root_parent or _command).name
+            )
+
+        if not app_command_found:
+            return None
+
+        mention = f"</{_command.qualified_name}:{app_command_found.id}>"
+        self.cache.setdefault(guild_id, {})
+        self.cache[guild_id][command] = mention
+        return mention
+
+    def _walk_children(
+        self, commands: list[app_commands.Group | app_commands.Command]
+    ) -> Generator[app_commands.Command, None, None]:
+        """
+        Recursively iterates over child commands in a group.
+
+        Parameters:
+        -----------
+        commands : list[app_commands.Group | app_commands.Command]
+            The list of commands to iterate over.
+
+        Yields:
+        -------
+        app_commands.Command
+            The child commands.
+        """
+        for command in commands:
+            if isinstance(command, app_commands.Group):
+                yield from self._walk_children(command.commands)
+            else:
+                yield command
+
+    async def walk_mentions(
+        self, *, guild: Optional[discord.abc.Snowflake] = None
+    ) -> AsyncIterator[tuple[app_commands.Command, str]]:
+        """
+        Retrieves all valid mentions for application commands in a specific guild.
+
+        Parameters:
+        -----------
+        guild : Optional[discord.abc.Snowflake]
+            The guild to retrieve mentions for. If None, retrieves global mentions.
+
+        Yields:
+        -------
+        tuple[app_commands.Command, str]
+            The command and its mention.
+        """
+        for command in self._walk_children(
+            self.get_commands(
+                guild=guild, type=discord.AppCommandType.chat_input
+            )
+        ):
+            mention = await self.find_mention_for(command, guild=guild)
+            if mention:
+                yield command, mention
+        if guild and self.fallback_to_global is True:
+            for command in self._walk_children(
+                self.get_commands(
+                    guild=None, type=discord.AppCommandType.chat_input
+                )
+            ):
+                mention = await self.find_mention_for(command, guild=guild)
+                if mention:
+                    yield command, mention
+                else:
+                    _log.warning(
+                        "Could not find a mention for command %s in the API. Are you out of sync?",
+                        command,
+                    )
