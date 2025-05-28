@@ -169,7 +169,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "disckit", specifier = ">=0.8" },
+    { name = "disckit", specifier = "==0.8" },
     { name = "discord-py", specifier = ">=2.5.2" },
     { name = "pyfiglet", specifier = ">=1.0.2" },
     { name = "python-dotenv", specifier = ">=1.1.0" },
