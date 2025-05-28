@@ -32,5 +32,5 @@ uv sync
 Then run the bot:
 
 ```bash
-python bot.py
+uv run main.py
 ```
