@@ -74,7 +74,7 @@ async def load_cogs(bot: Bot) -> None:
                 await bot.load_extension(cog_path)
 
 
-async def custom_status(bot: Any, *args: Any) -> tuple[str, ...]:  # pyright: ignore[reportUnusedParameter]
+async def custom_status(bot: Any, *args: Any) -> tuple[str, ...]:
     """
     Defines custom status lines for the bot.
 
