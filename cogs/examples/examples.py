@@ -19,19 +19,18 @@ Commands:
 """
 
 import logging
-from typing import override
 
 import discord
+from disckit.cogs import BaseCog
 from disckit.utils import disallow_bots, is_owner, make_autocomplete, sku_check
 from discord import Interaction, app_commands
-from discord.ext import commands
 
 from core import Bot
 
 logger = logging.getLogger(__name__)
 
 
-class Examples(commands.Cog, name="Examples"):
+class Examples(BaseCog, name="Examples"):
     """
     A cog containing examples for all utilities in `disckit.utils`.
 
@@ -56,15 +55,8 @@ class Examples(commands.Cog, name="Examples"):
     """
 
     def __init__(self, bot: Bot) -> None:
-        self.bot = bot  # pyright: ignore[reportUnannotatedClassAttribute]
-
-    @override
-    async def cog_load(self) -> None:
-        print(f"\033[94m{self.__class__.__name__} has been loaded.\033[0m")
-
-    @override
-    async def cog_unload(self) -> None:
-        print(f"\033[94m{self.__class__.__name__} has been unloaded.\033[0m")
+        super().__init__(logger=logger)
+        self.bot: Bot = bot
 
     @app_commands.command(name="autocomplete")
     @app_commands.describe(

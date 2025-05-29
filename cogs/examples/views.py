@@ -19,12 +19,12 @@ Commands:
 - view paginator-example: Demonstrates a paginator interaction.
 """
 
-from typing import override
+import logging
 
+from disckit.cogs import BaseCog
 from disckit.utils.embeds import MainEmbed
 from disckit.utils.paginator import Paginator
 from discord import Interaction, app_commands
-from discord.ext import commands
 
 from core import Bot
 from core.views.example_modals import ModalView
@@ -35,8 +35,10 @@ from core.views.example_views import (
 )
 from core.views.paginator_views import HomeView, get_extra_buttons
 
+logger = logging.getLogger(__name__)
 
-class ViewCommands(commands.Cog, name="View Commands"):
+
+class ViewCommands(BaseCog, name="View Commands"):
     """
     A cog containing commands related to views.
 
@@ -61,15 +63,8 @@ class ViewCommands(commands.Cog, name="View Commands"):
     """
 
     def __init__(self, bot: Bot) -> None:
-        self.bot = bot  # pyright: ignore[reportUnannotatedClassAttribute]
-
-    @override
-    async def cog_load(self) -> None:
-        print(f"\033[94m{self.__class__.__name__} has been loaded.\033[0m")
-
-    @override
-    async def cog_unload(self) -> None:
-        print(f"\033[94m{self.__class__.__name__} has been unloaded.\033[0m")
+        super().__init__(logger=logger)
+        self.bot: Bot = bot
 
     view_cmds: app_commands.Group = app_commands.Group(
         name="view",
