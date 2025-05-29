@@ -6,6 +6,45 @@ Classes:
 - DisableOnClickView: A view that disables all items when the button is clicked.
 - DisableOnTimeoutView: A view that disables all items when it times out.
 - MultiButtonView: A view with multiple buttons demonstrating different behaviors.
+
+Classes Details:
+----------------
+- DisableOnClickView:
+    Attributes:
+    -----------
+    - author : discord.User | discord.Member
+        The user or member who initiated the view.
+
+    Methods:
+    --------
+    - disable_button_callback(interaction: discord.Interaction, _button: discord.ui.Button[Any]) -> None:
+        Disables all items in the view and sends a success message.
+
+- DisableOnTimeoutView:
+    Attributes:
+    -----------
+    - author : discord.User | discord.Member
+        The user or member who initiated the view.
+    - timeout : float
+        The timeout duration in seconds.
+
+    Methods:
+    --------
+    - timeout_button_callback(interaction: discord.Interaction, _button: discord.ui.Button[Any]) -> None:
+        Sends a success message if clicked before the view times out.
+
+- MultiButtonView:
+    Attributes:
+    -----------
+    - author : discord.User | discord.Member
+        The user or member who initiated the view.
+
+    Methods:
+    --------
+    - disable_all_callback(interaction: discord.Interaction, _button: discord.ui.Button[Any]) -> None:
+        Disables all items in the view and sends a success message.
+    - do_nothing_callback(interaction: discord.Interaction, _button: discord.ui.Button[Any]) -> None:
+        Sends a message indicating no action was taken.
 """
 
 from typing import Any

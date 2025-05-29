@@ -6,28 +6,38 @@ Classes:
 --------
 - MentionTree: A custom command tree that stores and retrieves mentions for application commands.
 
-Methods:
---------
-- __init__(*args: Any, **kwargs: Any) -> None:
-    Initializes the `MentionTree` instance with custom attributes for caching commands and mentions.
+Class Details:
+--------------
+- MentionTree:
+    Attributes:
+    -----------
+    - application_commands : dict[Optional[int], list[app_commands.AppCommand]]
+        Stores application commands by guild ID.
+    - cache : dict[Optional[int], dict[app_commands.Command | commands.HybridCommand | str, str]]
+        Caches mentions for commands by guild ID.
 
-- sync(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
-    Synchronizes commands and stores them in the internal cache.
+    Methods:
+    --------
+    - __init__(*args: Any, **kwargs: Any) -> None:
+        Initializes the `MentionTree` instance with custom attributes for caching commands and mentions.
 
-- fetch_commands(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
-    Fetches commands from Discord and updates the internal cache.
+    - sync(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+        Synchronizes commands and stores them in the internal cache.
 
-- get_or_fetch_commands(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
-    Retrieves commands from the cache or fetches them if not available.
+    - fetch_commands(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+        Fetches commands from Discord and updates the internal cache.
 
-- find_mention_for(command: app_commands.Command | commands.HybridCommand | str, *, guild: Optional[discord.abc.Snowflake] = None) -> Optional[str]:
-    Finds the mention for a specific command, optionally scoped to a guild.
+    - get_or_fetch_commands(*, guild: Optional[discord.abc.Snowflake] = None) -> list[app_commands.AppCommand]:
+        Retrieves commands from the cache or fetches them if not available.
 
-- _walk_children(commands: list[app_commands.Group | app_commands.Command]) -> Generator[app_commands.Command, None, None]:
-    Recursively iterates over child commands in a group.
+    - find_mention_for(command: app_commands.Command | commands.HybridCommand | str, *, guild: Optional[discord.abc.Snowflake] = None) -> Optional[str]:
+        Finds the mention for a specific command, optionally scoped to a guild.
 
-- walk_mentions(*, guild: Optional[discord.abc.Snowflake] = None) -> AsyncIterator[tuple[app_commands.Command, str]]:
-    Retrieves all valid mentions for application commands in a specific guild.
+    - _walk_children(commands: list[app_commands.Group | app_commands.Command]) -> Generator[app_commands.Command, None, None]:
+        Recursively iterates over child commands in a group.
+
+    - walk_mentions(*, guild: Optional[discord.abc.Snowflake] = None) -> AsyncIterator[tuple[app_commands.Command, str]]:
+        Retrieves all valid mentions for application commands in a specific guild.
 """
 
 from collections.abc import AsyncIterator, Generator

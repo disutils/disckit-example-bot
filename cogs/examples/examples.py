@@ -9,6 +9,13 @@ Functions:
 ----------
 - setup(bot: Bot) -> None:
     Asynchronously adds the `Examples` cog to the bot instance.
+
+Commands:
+---------
+- autocomplete: Demonstrates the autocomplete utility.
+- sku-check: Demonstrates the SKU check utility.
+- disallow-bots: Demonstrates the disallow bots decorator.
+- is-owner: Demonstrates the is_owner decorator.
 """
 
 import logging

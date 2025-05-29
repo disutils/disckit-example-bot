@@ -12,10 +12,11 @@ Functions:
 
 Commands:
 ---------
-- view.disable-on-click: Demonstrates a view that disables all buttons on click.
-- view.disable-on-timeout: Demonstrates a view that disables all buttons on timeout.
-- view.multi-button: Demonstrates a view with multiple buttons and behaviors.
-- view.modal-example: Demonstrates a modal interaction.
+- view disable-on-click: Demonstrates a view that disables all buttons on click.
+- view disable-on-timeout: Demonstrates a view that disables all buttons on timeout.
+- view multi-button: Demonstrates a view with multiple buttons and behaviors.
+- view modal-example: Demonstrates a modal interaction.
+- view paginator-example: Demonstrates a paginator interaction.
 """
 
 from typing import override

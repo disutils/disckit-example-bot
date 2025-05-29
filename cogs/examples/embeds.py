@@ -12,9 +12,9 @@ Functions:
 
 Commands:
 ---------
-- embed.main-embed: Demonstrates a main embed.
-- embed.success-embed: Demonstrates a success embed.
-- embed.error-embed: Demonstrates an error embed.
+- embed main-embed: Demonstrates a main embed.
+- embed success-embed: Demonstrates a success embed.
+- embed error-embed: Demonstrates an error embed.
 """
 
 from typing import override

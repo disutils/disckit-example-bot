@@ -3,20 +3,20 @@ This module defines commands to demonstrate the usage of the `CoolDown` utility.
 
 Classes:
 --------
-- CooldownExamples: A cog containing commands to showcase cooldown functionality.
+- CooldownCommands: A cog containing commands to showcase cooldown functionality.
 
 Functions:
 ----------
-- setup(bot: commands.Bot) -> None:
-    Asynchronously adds the `CooldownExamples` cog to the bot instance.
+- setup(bot: Bot) -> None:
+    Asynchronously adds the `CooldownCommands` cog to the bot instance.
 
 Commands:
 ---------
-- cooldown.user: Demonstrates a user-specific cooldown.
-- cooldown.guild: Demonstrates a guild-specific cooldown.
-- cooldown.channel: Demonstrates a channel-specific cooldown.
-- cooldown.sku: Demonstrates a user-specific cooldown with SKU bypass.
-- cooldown.reset: Resets the cooldown for a specific command.
+- cooldown user: Demonstrates a user-specific cooldown.
+- cooldown guild: Demonstrates a guild-specific cooldown.
+- cooldown channel: Demonstrates a channel-specific cooldown.
+- cooldown sku: Demonstrates a user-specific cooldown with SKU bypass.
+- cooldown reset: Resets the cooldown for a specific command.
 """
 
 from typing import override

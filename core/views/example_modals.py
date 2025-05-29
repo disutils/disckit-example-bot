@@ -3,7 +3,27 @@ This module defines a custom `ModalView` class for enhanced modal interactions.
 
 Classes:
 --------
-- ModalView: A custom view that integrates with modals for advanced interaction handling.
+- ModalView: A custom modal view that extends `BaseModal` to provide advanced interaction handling.
+
+Attributes:
+-----------
+- title : str
+    The title of the modal (up to 45 characters).
+- timeout : float | None
+    Timeout in seconds before the modal stops accepting input.
+- custom_id : str
+    The custom ID of the modal (up to 100 characters).
+- author : int | discord.User | discord.Member | None
+    The author of the modal, restricting usage to the specified user.
+
+Methods:
+--------
+- interaction_check(interaction: discord.Interaction) -> bool:
+    Ensures the interaction is from the authorized user.
+- on_error(interaction: discord.Interaction, error: Exception) -> None:
+    Handles errors that occur during modal interactions.
+- on_submit(interaction: discord.Interaction) -> None:
+    Handles the submission of the modal.
 """
 
 from typing import override

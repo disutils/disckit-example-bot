@@ -7,8 +7,6 @@ Constants:
 - RED_CROSS: Represents the red cross mark emoji.
 """
 
-# Emoji Configurations - Find all the Emojis in assets/emojis
-
 # Green Check Mark
 GREEN_CHECK: str = "✅"
 # Red Cross Mark

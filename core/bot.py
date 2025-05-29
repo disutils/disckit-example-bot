@@ -3,8 +3,25 @@ This module defines the core `Bot` class for the Discord bot, which extends the 
 It includes custom behavior for command synchronization and bot setup.
 
 Classes:
----------
+--------
 - Bot: Represents the main bot instance with custom setup logic and configurations.
+
+Classes Details:
+----------------
+- Bot:
+    Attributes:
+    -----------
+    - tree : MentionTree
+        The custom command tree used for handling interactions.
+
+    Methods:
+    --------
+    - __init__(intents: discord.Intents) -> None:
+        Initializes the bot instance with the specified intents and configurations.
+
+    - setup_hook() -> None:
+        Called when the bot logs in. Handles command synchronization and updates bot-related configurations,
+        such as the avatar URL and footer image.
 """
 
 from typing import override

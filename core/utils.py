@@ -8,10 +8,12 @@ Functions:
 
 Constants:
 ----------
-- LOG_DIR: Directory where log files are stored.
-- LOG_FILE: Name of the main log file.
-- MAX_LOG_SIZE: Maximum size of a single log file (in bytes).
-- MAX_LOGS: Maximum number of log files to retain.
+- LOG_DIR: The directory where log files are stored.
+- LOG_FILE: The name of the main log file.
+- MAX_LOG_SIZE: The maximum size of a single log file (in bytes).
+- MAX_LOGS: The maximum number of log files to retain.
+- LOG_LEVEL: The logging level for the application.
+- DEBUG: A flag to enable or disable debug mode.
 """
 
 import logging
@@ -19,23 +21,21 @@ import os
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 
-from core.config import LOG_DIR, LOG_FILE, MAX_LOG_SIZE, MAX_LOGS
+from core.config import LOG_DIR, LOG_FILE, MAX_LOG_SIZE, MAX_LOGS, LOG_LEVEL, LOG_DEBUG
 
 
 def setup_logging() -> None:
     """
     Configures logging for the application.
 
-    This function sets up a rotating file handler for logging, ensures the log directory exists,
-    rotates old log files, and suppresses noisy loggers.
+    This function performs the following steps:
+    1. Ensures the log directory exists.
+    2. Rotates the current log file by renaming it with a timestamp.
+    3. Removes excess log files beyond the maximum allowed.
+    4. Configures the root logger with a rotating file handler.
+    5. Suppresses logging for noisy third-party libraries.
 
-    Steps:
-    ------
-    1. Create the log directory if it doesn't exist.
-    2. Rotate the current log file by renaming it with a timestamp.
-    3. Remove excess log files beyond the maximum allowed.
-    4. Configure the root logger with a rotating file handler.
-    5. Suppress logging for noisy third-party libraries.
+    If DEBUG is True, the logging level is set to DEBUG regardless of LOG_LEVEL.
     """
     os.makedirs(LOG_DIR, exist_ok=True)
 
@@ -52,7 +52,12 @@ def setup_logging() -> None:
         os.remove(os.path.join(LOG_DIR, log_files.pop(0)))
 
     logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
+
+    # Set log level based on DEBUG and LOG_LEVEL
+    if LOG_DEBUG:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(getattr(logging, LOG_LEVEL.upper(), logging.INFO))
 
     formatter = logging.Formatter(
         fmt="[%(asctime)s] [%(levelname)s] [%(name)s:%(lineno)d] %(message)s",
@@ -63,7 +68,7 @@ def setup_logging() -> None:
         LOG_FILE, maxBytes=MAX_LOG_SIZE, backupCount=MAX_LOGS
     )
     file_handler.setFormatter(formatter)
-    file_handler.setLevel(logging.DEBUG)
+    file_handler.setLevel(logger.level)
 
     logger.addHandler(file_handler)
 
