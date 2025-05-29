@@ -22,6 +22,7 @@ Constants:
 import asyncio
 import logging
 import os
+from typing import Any
 
 import discord
 import pyfiglet
@@ -73,14 +74,17 @@ async def load_cogs(bot: Bot) -> None:
                 await bot.load_extension(cog_path)
 
 
-async def custom_status(bot: Bot) -> tuple[str, ...]:
+async def custom_status(bot: Any, *args: Any) -> tuple[str, ...]:  # pyright: ignore[reportUnusedParameter]
     """
     Defines custom status lines for the bot.
 
     Parameters:
     -----------
-    bot : Bot
+    bot : Any
         The bot instance.
+
+    *args : Any
+        Additional arguments.
 
     Returns:
     --------
@@ -106,7 +110,7 @@ async def main() -> None:
     discord.utils.setup_logging()
 
     # Display a banner for the bot
-    print(pyfiglet.figlet_format("Disckit Example Bot"))
+    print(pyfiglet.figlet_format("Disckit Example Bot"))  # pyright: ignore[reportUnknownMemberType]
 
     # Configure utility settings for the bot
     UtilConfig.MAIN_COLOR = MAIN_COLOR
@@ -133,6 +137,12 @@ async def main() -> None:
     await dis_load_extension(
         bot, CogEnum.ERROR_HANDLER, CogEnum.STATUS_HANDLER
     )
+
+    # Ensure TOKEN is not None
+    if not TOKEN:
+        raise ValueError(
+            "Discord bot token is not set in the environment variables."
+        )
 
     # Start the bot using the token
     await bot.start(TOKEN)

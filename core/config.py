@@ -20,8 +20,6 @@ Constants:
 - ERROR_COLOR: Error color for embeds (red).
 """
 
-from typing import Optional
-
 from discord import utils
 
 
@@ -39,11 +37,11 @@ class BotData:
         Optional URL for the bot's avatar.
     """
 
-    VERSION: str = "0.8"  # The current version of the bot (in this case its based on Disckit)
+    VERSION: str = "0.9"  # The current version of the bot (in this case its based on Disckit)
     SUPPORT_SERVER: str = (
         "https://discord.gg/28RuT8WsKT"  # Link to the support server
     )
-    AVATAR_URL: Optional[str] = None  # Optional URL for the bot's avatar
+    AVATAR_URL: str | None = None  # Optional URL for the bot's avatar
 
 
 OWNER_IDS: set[int] = {
@@ -58,7 +56,7 @@ LOG_FILE: str = "bot.log"  # The name of the log file
 MAX_LOGS: int = 10  # The maximum number of logs to store
 MAX_LOG_SIZE: int = 5 * 1024 * 1024  # Maximum log file size (5 MB)
 
-LOG_CHANNEL: int = 1293629696206176409  # Channel ID for general logs
+LOG_CHANNEL: int = 123456789012345678  # Replace with the actual channel ID
 
 # Colours -
 MAIN_COLOR: int = 0x5865F2  # Main color for embeds (blue)

@@ -7,6 +7,8 @@ Classes:
 - Bot: Represents the main bot instance with custom setup logic and configurations.
 """
 
+from typing import override
+
 import discord
 from disckit import UtilConfig
 from discord.ext import commands
@@ -55,6 +57,7 @@ class Bot(commands.AutoShardedBot):
         )
         self.tree: MentionTree
 
+    @override
     async def setup_hook(self) -> None:
         """
         Called when the bot logs in.
@@ -66,10 +69,13 @@ class Bot(commands.AutoShardedBot):
         cmds = len(synced_global)
         print(f"Synced {cmds} global commands.")
 
-        if self.user.avatar:
-            BotData.AVATAR_URL = self.user.avatar.url
-        else:
-            BotData.AVATAR_URL = None
+        if self.user is not None:
+            if self.user.avatar:
+                BotData.AVATAR_URL = self.user.avatar.url
+            else:
+                BotData.AVATAR_URL = None
 
-        UtilConfig.FOOTER_IMAGE = BotData.AVATAR_URL
-        print(f"\033[93m{self.user.name} has logged in successfully.\033[0m")
+            UtilConfig.FOOTER_IMAGE = BotData.AVATAR_URL
+            print(
+                f"\033[93m{self.user.name} has logged in successfully.\033[0m"
+            )
