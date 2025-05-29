@@ -19,17 +19,19 @@ Commands:
 - cooldown reset: Resets the cooldown for a specific command.
 """
 
-from typing import override
+import logging
 
+from disckit.cogs import BaseCog
 from disckit.utils.cooldown import CoolDown, CoolDownBucket
 from disckit.utils.embeds import ErrorEmbed, SuccessEmbed
 from discord import Interaction, app_commands
-from discord.ext import commands
 
 from core import Bot
 
+logger = logging.getLogger(__name__)
 
-class CooldownCommands(commands.Cog, name="Cooldown Commands"):
+
+class CooldownCommands(BaseCog, name="Cooldown Commands"):
     """
     A cog to demonstrate the usage of the `CoolDown` utility.
 
@@ -69,21 +71,8 @@ class CooldownCommands(commands.Cog, name="Cooldown Commands"):
         bot : Bot
             The bot instance to which this cog is attached.
         """
-        self.bot = bot  # pyright: ignore[reportUnannotatedClassAttribute]
-
-    @override
-    async def cog_load(self) -> None:
-        """
-        Logs when the cog is loaded.
-        """
-        print(f"\033[94m{self.__class__.__name__} has been loaded.\033[0m")
-
-    @override
-    async def cog_unload(self) -> None:
-        """
-        Logs when the cog is unloaded.
-        """
-        print(f"\033[94m{self.__class__.__name__} has been unloaded.\033[0m")
+        super().__init__(logger=logger)
+        self.bot: Bot = bot
 
     cooldown_cmds: app_commands.Group = app_commands.Group(
         name="cooldown",
@@ -166,6 +155,34 @@ class CooldownCommands(commands.Cog, name="Cooldown Commands"):
             ),
             ephemeral=True,
         )
+
+    @cooldown_cmds.command(name="dynamic-cooldown")
+    async def dynamic_cooldown(self, interaction: Interaction) -> None:
+        """
+        Dynamically adds cooldown to a specific user.
+
+        Parameters:
+        -----------
+        interaction : Interaction
+            The interaction that triggered this command.
+        """
+        if interaction.user.id == 1022085572719808542:
+            # Check if user of that ID is in cooldown or not
+            allowed, cooldown_text = CoolDown.check(
+                interaction, CoolDownBucket.USER
+            )
+
+            if not allowed:
+                # If they are in cooldown, send an appropriate message
+                await interaction.response.send_message(
+                    f"You can use the command in {cooldown_text}"
+                )
+                return
+
+            # If they are allowed, add the cooldown and continue the command
+            CoolDown.add(25, interaction, CoolDownBucket.USER)
+
+        await interaction.response.send_message("Testing dynamic cooldowns")
 
     @cooldown_cmds.command(name="reset")
     async def reset_cooldown(self, interaction: Interaction) -> None:
