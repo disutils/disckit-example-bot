@@ -46,3 +46,4 @@ reportAssignmentType = false
 reportRedeclaration = false
 reportAny = false
 reportExplicitAny = false
+reportUnusedParameter = false
