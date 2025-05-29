@@ -3,22 +3,12 @@ This module defines the `Examples` cog for the Discord bot, showcasing various u
 
 Classes:
 --------
-- Examples: A cog containing example commands for utilities like embeds, autocomplete, and decorators.
+- Examples: A cog containing example commands for utilities like embeds, autocomplete, decorators, and views.
 
 Functions:
 ----------
 - setup(bot: Bot) -> None:
     Asynchronously adds the `Examples` cog to the bot instance.
-
-Commands:
----------
-- embed.main-embed: Demonstrates a main embed.
-- embed.success-embed: Demonstrates a success embed.
-- embed.error-embed: Demonstrates an error embed.
-- autocomplete: Demonstrates the autocomplete utility.
-- sku-check: Demonstrates the SKU check utility.
-- disallow-bots: Demonstrates the disallow bots decorator.
-- is-owner: Demonstrates the is_owner decorator.
 """
 
 import logging
@@ -26,7 +16,6 @@ from typing import override
 
 import discord
 from disckit.utils import disallow_bots, is_owner, make_autocomplete, sku_check
-from disckit.utils.embeds import ErrorEmbed, MainEmbed, SuccessEmbed
 from discord import Interaction, app_commands
 from discord.ext import commands
 
@@ -52,15 +41,6 @@ class Examples(commands.Cog, name="Examples"):
     cog_unload() -> None:
         Called when the cog is unloaded.
 
-    embed_cmds.main_embed(interaction: Interaction) -> None:
-        Demonstrates a main embed.
-
-    embed_cmds.success_embed(interaction: Interaction) -> None:
-        Demonstrates a success embed.
-
-    embed_cmds.error_embed(interaction: Interaction) -> None:
-        Demonstrates an error embed.
-
     autocomplete_example(interaction: Interaction, choice: str) -> None:
         Demonstrates the autocomplete utility.
 
@@ -84,45 +64,6 @@ class Examples(commands.Cog, name="Examples"):
     @override
     async def cog_unload(self) -> None:
         print(f"\033[94m{self.__class__.__name__} has been unloaded.\033[0m")
-
-    embed_cmds: app_commands.Group = app_commands.Group(
-        name="embed",
-        description="Commands related to embeds.",
-        guild_only=True,
-    )
-
-    @embed_cmds.command(name="main-embed")
-    async def main_embed(self, interaction: Interaction) -> None:
-        """An example of a main embed."""
-        embed = MainEmbed(
-            title="Main Embed Example",
-            description="This is an example of a main embed.",
-        )
-        embed.add_field(name="Field 1", value="This is the first field.")
-        embed.add_field(name="Field 2", value="This is the second field.")
-        await interaction.response.send_message(embed=embed)
-
-    @embed_cmds.command(name="success-embed")
-    async def success_embed(self, interaction: Interaction) -> None:
-        """An example of a success embed."""
-        embed = SuccessEmbed(
-            title="Success Embed Example",
-            description="This is an example of a success embed.",
-        )
-        embed.add_field(name="Field 1", value="This is the first field.")
-        embed.add_field(name="Field 2", value="This is the second field.")
-        await interaction.response.send_message(embed=embed)
-
-    @embed_cmds.command(name="error-embed")
-    async def error_embed(self, interaction: Interaction) -> None:
-        """An example of an error embed."""
-        embed = ErrorEmbed(
-            title="Error Embed Example",
-            description="This is an example of an error embed.",
-        )
-        embed.add_field(name="Field 1", value="This is the first field.")
-        embed.add_field(name="Field 2", value="This is the second field.")
-        await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="autocomplete")
     @app_commands.describe(
