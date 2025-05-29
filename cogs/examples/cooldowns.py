@@ -57,6 +57,9 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
 
     cooldown.sku(interaction: Interaction) -> None:
         Demonstrates a user-specific cooldown of 30 seconds, bypassable with a specific SKU.
+    
+    cooldown.dynamic_cooldown(interaction: Interaction) -> None:
+        Dynamically adds cooldown to a specific user.
 
     cooldown.reset(interaction: Interaction) -> None:
         Resets the cooldown for the `user` command.
