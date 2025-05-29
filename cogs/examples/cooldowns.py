@@ -44,12 +44,6 @@ class CooldownCommands(commands.Cog, name="Cooldown Commands"):
 
     Methods:
     --------
-    cog_load() -> None:
-        Logs when the cog is loaded.
-
-    cog_unload() -> None:
-        Logs when the cog is unloaded.
-
     cooldown.user(interaction: Interaction) -> None:
         Demonstrates a user-specific cooldown of 10 seconds.
 

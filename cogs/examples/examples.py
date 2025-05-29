@@ -35,12 +35,6 @@ class Examples(commands.Cog, name="Examples"):
 
     Methods:
     --------
-    cog_load() -> None:
-        Called when the cog is loaded.
-
-    cog_unload() -> None:
-        Called when the cog is unloaded.
-
     autocomplete_example(interaction: Interaction, choice: str) -> None:
         Demonstrates the autocomplete utility.
 
