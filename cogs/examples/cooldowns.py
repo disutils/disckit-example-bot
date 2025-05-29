@@ -69,7 +69,7 @@ class CooldownCommands(commands.Cog, name="Cooldown Commands"):
         bot : Bot
             The bot instance to which this cog is attached.
         """
-        self.bot = bot # pyright: ignore[reportUnannotatedClassAttribute]
+        self.bot = bot  # pyright: ignore[reportUnannotatedClassAttribute]
 
     @override
     async def cog_load(self) -> None:

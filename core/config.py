@@ -34,7 +34,9 @@ class BotData:
     """
 
     VERSION: str = "0.9"  # The current version of the bot (based on the latest version of disckit)
-    SUPPORT_SERVER: str = "https://discord.gg/28RuT8WsKT"  # Link to the support server
+    SUPPORT_SERVER: str = (
+        "https://discord.gg/28RuT8WsKT"  # Link to the support server
+    )
     AVATAR_URL: str | None = None  # Optional URL for the bot's avatar
 
 
@@ -68,4 +70,4 @@ LOG_DEBUG: bool = False  # A flag to enable or disable debug mode
 
 
 # Log Channel
-LOG_CHANNEL: int = 123456789012345678  # Replace with the actual channel ID
+LOG_CHANNEL: int = 1234  # Replace with the actual channel ID

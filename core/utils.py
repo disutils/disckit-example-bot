@@ -21,7 +21,14 @@ import os
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 
-from core.config import LOG_DIR, LOG_FILE, MAX_LOG_SIZE, MAX_LOGS, LOG_LEVEL, LOG_DEBUG
+from core.config import (
+    LOG_DEBUG,
+    LOG_DIR,
+    LOG_FILE,
+    LOG_LEVEL,
+    MAX_LOG_SIZE,
+    MAX_LOGS,
+)
 
 
 def setup_logging() -> None:
