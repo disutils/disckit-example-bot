@@ -33,6 +33,7 @@ from core.views.example_views import (
     DisableOnTimeoutView,
     MultiButtonView,
 )
+from core.views.paginator_views import HomeView, get_extra_buttons
 
 
 class ViewCommands(commands.Cog, name="View Commands"):
@@ -168,6 +169,8 @@ class ViewCommands(commands.Cog, name="View Commands"):
             pages=pages,
             author=interaction.user.id,
             home_page="Home Page: This is the starting page.",
+            home_view=HomeView(author=interaction.user),
+            extra_buttons=get_extra_buttons(),
         )
 
         await paginator.start()
