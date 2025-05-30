@@ -161,7 +161,7 @@ class ViewCommands(BaseCog, name="View Commands"):
 
         paginator = Paginator(
             interaction=interaction,
-            pages=pages,
+            pages=list(pages),
             author=interaction.user.id,
             home_page="Home Page: This is the starting page.",
             home_view=HomeView(author=interaction.user),
