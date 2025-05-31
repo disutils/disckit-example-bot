@@ -37,8 +37,8 @@ class HomeView(BaseView):
         """
         Initializes the HomeView.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         author : discord.User | discord.Member
             The user or member who initiated the view.
         """
@@ -53,8 +53,8 @@ class HomeView(BaseView):
 
         Sends a response indicating the button was clicked.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : discord.Interaction
             The interaction that triggered the button click.
         _button : discord.ui.Button[Any]

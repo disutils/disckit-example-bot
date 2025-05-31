@@ -103,8 +103,8 @@ async def setup(bot: Bot) -> None:
     """
     Asynchronously adds the `Examples` cog to the bot instance.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
         The bot instance to add the cog to.
     """

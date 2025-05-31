@@ -77,8 +77,8 @@ class ViewCommands(BaseCog, name="View Commands"):
         """
         An example of a view that disables all buttons on click.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -95,8 +95,8 @@ class ViewCommands(BaseCog, name="View Commands"):
         """
         An example of a view that disables all buttons on timeout.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -113,8 +113,8 @@ class ViewCommands(BaseCog, name="View Commands"):
         """
         An example of a view with multiple buttons and behaviors.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -131,8 +131,8 @@ class ViewCommands(BaseCog, name="View Commands"):
         """
         An example of a modal interaction.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -147,8 +147,8 @@ class ViewCommands(BaseCog, name="View Commands"):
         """
         An example of a paginator interaction.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -175,8 +175,8 @@ async def setup(bot: Bot) -> None:
     """
     Asynchronously adds the `ViewCommands` cog to the bot instance.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
         The bot instance to add the cog to.
     """

@@ -68,8 +68,8 @@ class ModalView(BaseModal):
         """
         Initializes the ModalView.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         title : str
             The title of the modal.
         timeout : float | None
@@ -97,8 +97,8 @@ class ModalView(BaseModal):
         """
         Handles the submission of the modal.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : discord.Interaction
             The interaction that triggered the modal submission.
         """

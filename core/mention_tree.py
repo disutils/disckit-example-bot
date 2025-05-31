@@ -89,8 +89,8 @@ class MentionTree(app_commands.CommandTree):
         """
         Initializes the `MentionTree` instance with custom attributes for caching commands and mentions.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         *args : Any
             Positional arguments passed to the parent class.
 
@@ -118,8 +118,8 @@ class MentionTree(app_commands.CommandTree):
         """
         Synchronizes commands and stores them in the internal cache.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         guild : Optional[discord.abc.Snowflake]
             The guild to synchronize commands for. If None, synchronizes global commands.
 
@@ -141,8 +141,8 @@ class MentionTree(app_commands.CommandTree):
         """
         Fetches commands from Discord and updates the internal cache.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         guild : Optional[discord.abc.Snowflake]
             The guild to fetch commands for. If None, fetches global commands.
 
@@ -163,8 +163,8 @@ class MentionTree(app_commands.CommandTree):
         """
         Retrieves commands from the cache or fetches them if not available.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         guild : Optional[discord.abc.Snowflake]
             The guild to retrieve commands for. If None, retrieves global commands.
 
@@ -189,8 +189,8 @@ class MentionTree(app_commands.CommandTree):
         """
         Finds the mention for a specific command, optionally scoped to a guild.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         command : app_commands.Command | commands.HybridCommand | str
             The command to find the mention for.
 
@@ -254,8 +254,8 @@ class MentionTree(app_commands.CommandTree):
         """
         Recursively iterates over child commands in a group.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         commands : list[app_commands.Group | app_commands.Command]
             The list of commands to iterate over.
 
@@ -276,8 +276,8 @@ class MentionTree(app_commands.CommandTree):
         """
         Retrieves all valid mentions for application commands in a specific guild.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         guild : Optional[discord.abc.Snowflake]
             The guild to retrieve mentions for. If None, retrieves global mentions.
 

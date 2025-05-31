@@ -62,8 +62,8 @@ async def load_cogs(bot: Bot) -> None:
     """
     Loads cogs from the base cog directory.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
         The bot instance to load cogs into.
     """
@@ -78,8 +78,8 @@ async def custom_status(bot: Any, *args: Any) -> tuple[str, ...]:
     """
     Defines custom status lines for the bot.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Any
         The bot instance.
 

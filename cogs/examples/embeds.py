@@ -64,8 +64,8 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
         """
         An example of a main embed.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -82,8 +82,8 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
         """
         An example of a success embed.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -100,8 +100,8 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
         """
         An example of an error embed.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -118,8 +118,8 @@ async def setup(bot: Bot) -> None:
     """
     Asynchronously adds the `EmbedCommands` cog to the bot instance.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
         The bot instance to add the cog to.
     """

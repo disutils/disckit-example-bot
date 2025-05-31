@@ -59,8 +59,8 @@ class Bot(commands.AutoShardedBot):
         """
         Initializes the bot instance.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         intents : discord.Intents
             The intents to be used by the bot for interacting with Discord.
         """

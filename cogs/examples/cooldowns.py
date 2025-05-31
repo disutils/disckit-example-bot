@@ -69,8 +69,8 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         """
         Initializes the CooldownExamples cog.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         bot : Bot
             The bot instance to which this cog is attached.
         """
@@ -89,8 +89,8 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         """
         A command with a user-specific cooldown of 10 seconds.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -108,8 +108,8 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         """
         A command with a guild-specific cooldown of 20 seconds.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -127,8 +127,8 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         """
         A command with a channel-specific cooldown of 15 seconds.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -146,8 +146,8 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         """
         A command with a user-specific cooldown of 30 seconds, bypassable with a specific SKU.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -164,8 +164,8 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         """
         Dynamically adds cooldown to a specific user.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -192,8 +192,8 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         """
         Resets the cooldown for the user on the `user` command.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
             The interaction that triggered this command.
         """
@@ -221,8 +221,8 @@ async def setup(bot: Bot) -> None:
     """
     Adds the CooldownCommands cog to the bot.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
         The bot instance to which the cog will be added.
     """

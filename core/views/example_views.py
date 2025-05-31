@@ -73,8 +73,8 @@ class DisableOnClickView(BaseView):
         """
         Initializes the DisableOnClickView.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         author : discord.User | discord.Member
             The user or member who initiated the view.
         """
@@ -89,8 +89,8 @@ class DisableOnClickView(BaseView):
 
         Disables all items in the view and sends a success message.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : discord.Interaction
             The interaction that triggered the button click.
         _button : discord.ui.Button[Any]
@@ -127,8 +127,8 @@ class DisableOnTimeoutView(BaseView):
         """
         Initializes the DisableOnTimeoutView.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         author : discord.User | discord.Member
             The user or member who initiated the view.
         timeout : float, optional
@@ -147,8 +147,8 @@ class DisableOnTimeoutView(BaseView):
 
         Sends a success message if clicked before the view times out.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : discord.Interaction
             The interaction that triggered the button click.
         _button : discord.ui.Button[Any]
@@ -182,8 +182,8 @@ class MultiButtonView(BaseView):
         """
         Initializes the MultiButtonView.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         author : discord.User | discord.Member
             The user or member who initiated the view.
         """
@@ -198,8 +198,8 @@ class MultiButtonView(BaseView):
 
         Disables all items in the view and sends a success message.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : discord.Interaction
             The interaction that triggered the button click.
         _button : discord.ui.Button[Any]
@@ -221,8 +221,8 @@ class MultiButtonView(BaseView):
 
         Sends a message indicating no action was taken.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : discord.Interaction
             The interaction that triggered the button click.
         _button : discord.ui.Button[Any]
