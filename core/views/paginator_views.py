@@ -1,8 +1,7 @@
-from typing import Any
-
 import discord
 from disckit.utils import SuccessEmbed
 from disckit.utils.ui import BaseView
+from discord.ui import View
 
 
 class HomeView(BaseView):
@@ -30,7 +29,7 @@ class HomeView(BaseView):
     async def home_button_callback(
         self,
         interaction: discord.Interaction,
-        button: discord.ui.Button[Any],
+        button: discord.ui.Button[View],
     ) -> None:
         """
         Callback for the home view button.
@@ -39,7 +38,7 @@ class HomeView(BaseView):
         ----------
         interaction : discord.Interaction
             The interaction object.
-        button : discord.ui.Button[Any]
+        button : discord.ui.Button[View]
             The button that was clicked.
         """
         await interaction.response.send_message(
@@ -48,13 +47,13 @@ class HomeView(BaseView):
         )
 
 
-def get_extra_buttons() -> list[discord.ui.Button[Any]]:
+def get_extra_buttons() -> list[discord.ui.Button[View]]:
     """
     Generate a list of extra buttons with various styles.
 
     Returns
     -------
-    list[discord.ui.Button[Any]]
+    list[discord.ui.Button[View]]
         A list of buttons with different labels and styles.
     """
     labels: list[str] = list("ABCDEFGHIJKLMNOPQRS")
@@ -66,7 +65,7 @@ def get_extra_buttons() -> list[discord.ui.Button[Any]]:
         discord.ButtonStyle.blurple,
     ]
 
-    buttons: list[discord.ui.Button[Any]] = []
+    buttons: list[discord.ui.Button[View]] = []
     for i, label in enumerate(labels):
         style = styles[i % len(styles)]
         buttons.append(discord.ui.Button(label=label, style=style))
