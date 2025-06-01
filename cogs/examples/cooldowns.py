@@ -7,7 +7,7 @@ from discord import Interaction, app_commands
 
 from core import Bot
 
-logger: logging.Logger = logging.getLogger(__name__)
+_logger: logging.Logger = logging.getLogger(__name__)
 
 
 class CooldownCommands(BaseCog, name="Cooldown Commands"):
@@ -29,7 +29,7 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         bot : Bot
             The bot instance.
         """
-        super().__init__(logger=logger)
+        super().__init__(logger=_logger)
         self.bot: Bot = bot
 
     cooldown_cmds: app_commands.Group = app_commands.Group(
