@@ -7,12 +7,12 @@ from discord import Interaction, app_commands
 
 from core import Bot
 
-logger: logging.Logger = logging.getLogger(__name__)
+_logger: logging.Logger = logging.getLogger(__name__)
 
 
 class Examples(BaseCog, name="Examples"):
     """
-    A cog that provides usage examples of utility functions from `disckit.utils`.
+    A cog for demonstrating various example commands.
 
     Parameters
     ----------
@@ -29,7 +29,7 @@ class Examples(BaseCog, name="Examples"):
         bot : Bot
             The bot instance.
         """
-        super().__init__(logger=logger)
+        super().__init__(logger=_logger)
         self.bot: Bot = bot
 
     @app_commands.command(name="autocomplete")
@@ -43,7 +43,7 @@ class Examples(BaseCog, name="Examples"):
         self, interaction: Interaction, choice: str
     ) -> None:
         """
-        Responds with the selected autocomplete option.
+        Demonstrate an autocomplete command.
 
         Parameters
         ----------
@@ -63,16 +63,16 @@ class Examples(BaseCog, name="Examples"):
         self, interaction: Interaction, sku_id: int, user_id: int
     ) -> None:
         """
-        Checks whether the given user has access to a specified SKU.
+        Check if a user has a specific SKU.
 
         Parameters
         ----------
         interaction : Interaction
             The Discord interaction.
         sku_id : int
-            The SKU ID to check.
+            The SKU ID of the package to check.
         user_id : int
-            The user ID to check against the SKU.
+            The Discord user ID to check.
         """
         has_sku = await sku_check(self.bot, sku_id, user_id)
         await interaction.response.send_message(f"User has SKU: {has_sku}")
@@ -84,14 +84,14 @@ class Examples(BaseCog, name="Examples"):
         self, interaction: Interaction, user: discord.User
     ) -> None:
         """
-        Sends the username of a human user, disallowing bot accounts.
+        Demonstrate a command that disallows bots.
 
         Parameters
         ----------
         interaction : Interaction
             The Discord interaction.
         user : discord.User
-            The Discord user provided in the command.
+            The Discord user to check.
         """
         await interaction.response.send_message(f"User: {user.name}")
 
@@ -99,7 +99,7 @@ class Examples(BaseCog, name="Examples"):
     @is_owner
     async def is_owner_example(self, interaction: Interaction) -> None:
         """
-        Confirms the invoking user is the bot owner.
+        Demonstrate a command restricted to the bot owner.
 
         Parameters
         ----------

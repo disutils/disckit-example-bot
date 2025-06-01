@@ -1,5 +1,3 @@
-from typing import override
-
 import discord
 from disckit.utils import SuccessEmbed
 from disckit.utils.ui import BaseView
@@ -7,7 +5,12 @@ from disckit.utils.ui import BaseView
 
 class DisableOnClickView(BaseView):
     """
-    A view that disables all items when the button is clicked.
+    A view that disables all buttons when one is clicked.
+
+    Parameters
+    ----------
+    author : discord.User or discord.Member
+        The author of the view.
     """
 
     def __init__(self, author: discord.User | discord.Member) -> None:
@@ -16,8 +19,8 @@ class DisableOnClickView(BaseView):
 
         Parameters
         ----------
-        author : discord.User | discord.Member
-            The user or member who initiated the view.
+        author : discord.User or discord.Member
+            The author of the view.
         """
         super().__init__(author=author)
 
@@ -25,17 +28,17 @@ class DisableOnClickView(BaseView):
     async def disable_button_callback(
         self,
         interaction: discord.Interaction,
-        _button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[BaseView],
     ) -> None:
         """
-        Callback for the "Disable Me!" button.
+        Callback to disable all buttons when clicked.
 
         Parameters
         ----------
         interaction : discord.Interaction
-            The interaction that triggered the button click.
-        _button : discord.ui.Button[BaseView]
-            The button that was clicked (unused).
+            The interaction object.
+        button : discord.ui.Button[BaseView]
+            The button that was clicked.
         """
         self.disable_all_items()
         await interaction.response.edit_message(view=self)
@@ -47,7 +50,14 @@ class DisableOnClickView(BaseView):
 
 class DisableOnTimeoutView(BaseView):
     """
-    A view that disables all items when it times out.
+    A view that disables all buttons after a timeout.
+
+    Parameters
+    ----------
+    author : discord.User or discord.Member
+        The author of the view.
+    timeout : float, optional
+        The timeout duration in seconds, by default 10.0.
     """
 
     def __init__(
@@ -58,10 +68,10 @@ class DisableOnTimeoutView(BaseView):
 
         Parameters
         ----------
-        author : discord.User | discord.Member
-            The user or member who initiated the view.
+        author : discord.User or discord.Member
+            The author of the view.
         timeout : float, optional
-            The timeout duration in seconds (default is 10.0).
+            The timeout duration in seconds, by default 10.0.
         """
         super().__init__(author=author, timeout=timeout)
 
@@ -71,17 +81,17 @@ class DisableOnTimeoutView(BaseView):
     async def timeout_button_callback(
         self,
         interaction: discord.Interaction,
-        _button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[BaseView],
     ) -> None:
         """
-        Callback for the "Click Me Before Timeout!" button.
+        Callback to handle button clicks before timeout.
 
         Parameters
         ----------
         interaction : discord.Interaction
-            The interaction that triggered the button click.
-        _button : discord.ui.Button[BaseView]
-            The button that was clicked (unused).
+            The interaction object.
+        button : discord.ui.Button[BaseView]
+            The button that was clicked.
         """
         await interaction.response.send_message(
             embed=SuccessEmbed("Clicked!", "You clicked before timeout."),
@@ -91,7 +101,12 @@ class DisableOnTimeoutView(BaseView):
 
 class MultiButtonView(BaseView):
     """
-    A view with multiple buttons demonstrating different behaviors.
+    A view with multiple buttons for various actions.
+
+    Parameters
+    ----------
+    author : discord.User or discord.Member
+        The author of the view.
     """
 
     def __init__(self, author: discord.User | discord.Member) -> None:
@@ -100,8 +115,8 @@ class MultiButtonView(BaseView):
 
         Parameters
         ----------
-        author : discord.User | discord.Member
-            The user or member who initiated the view.
+        author : discord.User or discord.Member
+            The author of the view.
         """
         super().__init__(author=author)
 
@@ -109,17 +124,17 @@ class MultiButtonView(BaseView):
     async def disable_all_callback(
         self,
         interaction: discord.Interaction,
-        _button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[BaseView],
     ) -> None:
         """
-        Callback for the "Disable All" button.
+        Callback to disable all buttons when clicked.
 
         Parameters
         ----------
         interaction : discord.Interaction
-            The interaction that triggered the button click.
-        _button : discord.ui.Button[BaseView]
-            The button that was clicked (unused).
+            The interaction object.
+        button : discord.ui.Button[BaseView]
+            The button that was clicked.
         """
         self.disable_all_items()
         await interaction.response.edit_message(view=self)
@@ -132,17 +147,17 @@ class MultiButtonView(BaseView):
     async def do_nothing_callback(
         self,
         interaction: discord.Interaction,
-        _button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[BaseView],
     ) -> None:
         """
-        Callback for the "Do Nothing" button.
+        Callback for a button that performs no action.
 
         Parameters
         ----------
         interaction : discord.Interaction
-            The interaction that triggered the button click.
-        _button : discord.ui.Button[BaseView]
-            The button that was clicked (unused).
+            The interaction object.
+        button : discord.ui.Button[BaseView]
+            The button that was clicked.
         """
         await interaction.response.send_message(
             embed=SuccessEmbed("No Action", "This button does nothing."),

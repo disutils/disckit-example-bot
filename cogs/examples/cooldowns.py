@@ -7,12 +7,12 @@ from discord import Interaction, app_commands
 
 from core import Bot
 
-logger: logging.Logger = logging.getLogger(__name__)
+_logger: logging.Logger = logging.getLogger(__name__)
 
 
 class CooldownCommands(BaseCog, name="Cooldown Commands"):
     """
-    A cog that provides command cooldown examples using various bucket types.
+    A cog for demonstrating cooldown functionality in commands.
 
     Parameters
     ----------
@@ -29,7 +29,7 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
         bot : Bot
             The bot instance.
         """
-        super().__init__(logger=logger)
+        super().__init__(logger=_logger)
         self.bot: Bot = bot
 
     cooldown_cmds: app_commands.Group = app_commands.Group(
@@ -42,7 +42,7 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @CoolDown.cooldown(time=10, bucket_type=CoolDownBucket.USER)
     async def user_cooldown(self, interaction: Interaction) -> None:
         """
-        Responds with a message for a user-specific cooldown command.
+        Command with a 10-second cooldown per user.
 
         Parameters
         ----------
@@ -61,7 +61,7 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @CoolDown.cooldown(time=20, bucket_type=CoolDownBucket.GUILD)
     async def guild_cooldown(self, interaction: Interaction) -> None:
         """
-        Responds with a message for a guild-specific cooldown command.
+        Command with a 20-second cooldown per guild.
 
         Parameters
         ----------
@@ -80,7 +80,7 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @CoolDown.cooldown(time=15, bucket_type=CoolDownBucket.CHANNEL)
     async def channel_cooldown(self, interaction: Interaction) -> None:
         """
-        Responds with a message for a channel-specific cooldown command.
+        Command with a 15-second cooldown per channel.
 
         Parameters
         ----------
@@ -99,7 +99,7 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @CoolDown.cooldown(time=30, bucket_type=CoolDownBucket.USER, sku_id=12345)
     async def sku_cooldown(self, interaction: Interaction) -> None:
         """
-        Responds with a message for a user cooldown that can be bypassed with a specific SKU.
+        Command with a 30-second cooldown per user, bypassable with SKU.
 
         Parameters
         ----------
@@ -117,7 +117,7 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @cooldown_cmds.command(name="dynamic-cooldown")
     async def dynamic_cooldown(self, interaction: Interaction) -> None:
         """
-        Demonstrates dynamic cooldown logic based on user ID.
+        Command demonstrating dynamic cooldowns.
 
         Parameters
         ----------
@@ -142,7 +142,7 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @cooldown_cmds.command(name="reset")
     async def reset_cooldown(self, interaction: Interaction) -> None:
         """
-        Resets the user-specific cooldown for the 'user' command.
+        Command to reset the cooldown for the `user` command.
 
         Parameters
         ----------

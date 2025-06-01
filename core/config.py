@@ -11,7 +11,7 @@ class BotData:
         The current version of the bot.
     SUPPORT_SERVER : str
         Link to the support server.
-    AVATAR_URL : str | None
+    AVATAR_URL : str or None
         Optional URL for the bot's avatar.
     """
 

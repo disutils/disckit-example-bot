@@ -1,5 +1,5 @@
+import logging
 from collections.abc import AsyncIterator, Generator
-from logging import getLogger
 from typing import Any, override
 
 import discord
@@ -7,7 +7,7 @@ from discord import app_commands
 from discord.ext import commands
 
 __all__ = ("MentionTree",)
-_log = getLogger(__name__)
+_logger: logging.Logger = logging.getLogger(__name__)
 
 
 class MentionTree(app_commands.CommandTree):
@@ -49,12 +49,12 @@ class MentionTree(app_commands.CommandTree):
 
         Parameters
         ----------
-        guild : Optional[discord.abc.Snowflake]
+        guild : discord.abc.Snowflake or None, optional
             The guild to synchronize commands for. If None, synchronizes global commands.
 
         Returns
         -------
-        list[app_commands.AppCommand]
+        list of app_commands.AppCommand
             The synchronized commands.
         """
         ret = await super().sync(guild=guild)
@@ -72,12 +72,12 @@ class MentionTree(app_commands.CommandTree):
 
         Parameters
         ----------
-        guild : Optional[discord.abc.Snowflake]
+        guild : discord.abc.Snowflake or None, optional
             The guild to fetch commands for. If None, fetches global commands.
 
         Returns
         -------
-        list[app_commands.AppCommand]
+        list of app_commands.AppCommand
             The fetched commands.
         """
         ret = await super().fetch_commands(guild=guild)
@@ -94,12 +94,12 @@ class MentionTree(app_commands.CommandTree):
 
         Parameters
         ----------
-        guild : Optional[discord.abc.Snowflake]
+        guild : discord.abc.Snowflake or None, optional
             The guild to retrieve commands for. If None, retrieves global commands.
 
         Returns
         -------
-        list[app_commands.AppCommand]
+        list of app_commands.AppCommand
             The retrieved or fetched commands.
         """
         try:
@@ -120,14 +120,14 @@ class MentionTree(app_commands.CommandTree):
 
         Parameters
         ----------
-        command : app_commands.Command | commands.HybridCommand | str
+        command : app_commands.Command or commands.HybridCommand or str
             The command to find the mention for.
-        guild : Optional[discord.abc.Snowflake]
+        guild : discord.abc.Snowflake or None, optional
             The guild to scope the search to. If None, searches globally.
 
         Returns
         -------
-        Optional[str]
+        str or None
             The mention for the command, if found.
         """
         guild_id = guild.id if guild else None
@@ -184,7 +184,7 @@ class MentionTree(app_commands.CommandTree):
 
         Parameters
         ----------
-        commands : list[app_commands.Group | app_commands.Command]
+        commands : list of app_commands.Group or app_commands.Command
             The list of commands to iterate over.
 
         Yields
@@ -206,12 +206,12 @@ class MentionTree(app_commands.CommandTree):
 
         Parameters
         ----------
-        guild : Optional[discord.abc.Snowflake]
+        guild : discord.abc.Snowflake or None, optional
             The guild to retrieve mentions for. If None, retrieves global mentions.
 
         Yields
         ------
-        tuple[app_commands.Command, str]
+        tuple of app_commands.Command and str
             The command and its mention.
         """
         for command in self._walk_children(
@@ -232,7 +232,7 @@ class MentionTree(app_commands.CommandTree):
                 if mention:
                     yield command, mention
                 else:
-                    _log.warning(
+                    _logger.warning(
                         "Could not find a mention for command %s in the API. Are you out of sync?",
                         command,
                     )

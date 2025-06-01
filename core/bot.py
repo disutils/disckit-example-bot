@@ -12,8 +12,9 @@ class Bot(commands.AutoShardedBot):
     """
     Represents the main bot instance.
 
-    This class extends `commands.AutoShardedBot` and provides custom behavior for the bot's setup process,
-    including command synchronization and dynamic configuration updates.
+    This class extends `commands.AutoShardedBot` and provides custom behavior
+    for the bot's setup process, including command synchronization and dynamic
+    configuration updates.
 
     Parameters
     ----------
@@ -45,11 +46,13 @@ class Bot(commands.AutoShardedBot):
         """
         Handle bot setup after login.
 
-        Synchronizes commands and updates bot-related configurations such as the avatar URL and footer image.
+        Synchronizes commands and updates bot-related configurations such as
+        the avatar URL and footer image.
 
         Notes
         -----
-        Updates `BotData.AVATAR_URL` and `UtilConfig.FOOTER_IMAGE` based on the bot's avatar.
+        Updates `BotData.AVATAR_URL` and `UtilConfig.FOOTER_IMAGE` based on
+        the bot's avatar.
         """
         synced_global = await self.tree.sync()
         cmds = len(synced_global)

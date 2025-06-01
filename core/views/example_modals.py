@@ -7,18 +7,18 @@ from disckit.utils.ui import BaseModal
 
 class ModalView(BaseModal):
     """
-    A custom modal view extending BaseModal for advanced interaction handling.
+    A modal view for collecting user input.
 
     Parameters
     ----------
     title : str, optional
-        The title of the modal (default is "Default Modal").
+        The title of the modal, by default "Default Modal".
     timeout : float or None, optional
-        Timeout in seconds before the modal stops accepting input (default is None).
+        The timeout duration for the modal, by default None.
     custom_id : str, optional
-        The custom ID of the modal (default is "modal_view").
+        The custom ID for the modal, by default "modal_view".
     author : int or discord.User or discord.Member or None, optional
-        The author restricting usage to a specific user (default is None).
+        The author of the modal, by default None.
     """
 
     def __init__(
@@ -30,18 +30,18 @@ class ModalView(BaseModal):
         author: int | discord.User | discord.Member | None = None,
     ) -> None:
         """
-        Initialize the ModalView instance.
+        Initialize the ModalView.
 
         Parameters
         ----------
-        title : str
-            The title of the modal.
-        timeout : float or None
-            Timeout in seconds before the modal stops accepting input.
-        custom_id : str
-            The custom ID of the modal.
-        author : int or discord.User or discord.Member or None
-            The author of the modal.
+        title : str, optional
+            The title of the modal, by default "Default Modal".
+        timeout : float or None, optional
+            The timeout duration for the modal, by default None.
+        custom_id : str, optional
+            The custom ID for the modal, by default "modal_view".
+        author : int or discord.User or discord.Member or None, optional
+            The author of the modal, by default None.
         """
         super().__init__(
             title=title, timeout=timeout, custom_id=custom_id, author=author
@@ -64,7 +64,7 @@ class ModalView(BaseModal):
         Parameters
         ----------
         interaction : discord.Interaction
-            The interaction that triggered the modal submission.
+            The interaction object representing the modal submission.
         """
         user_input: str = self.input_field.value
         await interaction.response.send_message(

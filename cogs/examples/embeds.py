@@ -6,12 +6,12 @@ from discord import Interaction, app_commands
 
 from core import Bot
 
-logger: logging.Logger = logging.getLogger(__name__)
+_logger: logging.Logger = logging.getLogger(__name__)
 
 
 class EmbedCommands(BaseCog, name="Embed Commands"):
     """
-    A cog for demonstrating different types of embed messages.
+    A cog for demonstrating embed-related commands.
 
     Parameters
     ----------
@@ -28,7 +28,7 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
         bot : Bot
             The bot instance.
         """
-        super().__init__(logger=logger)
+        super().__init__(logger=_logger)
         self.bot: Bot = bot
 
     embed_cmds: app_commands.Group = app_commands.Group(
@@ -40,7 +40,7 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
     @embed_cmds.command(name="main-embed")
     async def main_embed(self, interaction: Interaction) -> None:
         """
-        Send a main embed with example content.
+        Send an example of a main embed.
 
         Parameters
         ----------
@@ -58,7 +58,7 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
     @embed_cmds.command(name="success-embed")
     async def success_embed(self, interaction: Interaction) -> None:
         """
-        Send a success embed with example content.
+        Send an example of a success embed.
 
         Parameters
         ----------
@@ -76,7 +76,7 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
     @embed_cmds.command(name="error-embed")
     async def error_embed(self, interaction: Interaction) -> None:
         """
-        Send an error embed with example content.
+        Send an example of an error embed.
 
         Parameters
         ----------
