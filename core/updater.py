@@ -1,11 +1,12 @@
 import asyncio
 import logging
 import re
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Any, Optional, Dict
-from contextlib import asynccontextmanager
+from typing import Any
 
 import aiohttp
 from packaging import version
@@ -13,7 +14,6 @@ from packaging.version import InvalidVersion
 
 from core.config import BotData
 
-# Configure logging
 _logger = logging.getLogger(__name__)
 
 
@@ -68,9 +68,9 @@ class VersionComparison:
     latest_version: str
     current_normalized: str
     latest_normalized: str
-    release_info: Optional[ReleaseInfo] = None
+    release_info: ReleaseInfo | None = None
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for backward compatibility."""
         result = {
             "status": self.status.value,
@@ -119,10 +119,12 @@ class GitHubReleaseChecker:
             timeout: Request timeout in seconds
             max_retries: Maximum number of retry attempts
         """
-        self.repo_url = BotData.REPO_URL.rstrip("/")
-        self.api_url = self._convert_to_api_url(self.repo_url)
-        self.timeout = aiohttp.ClientTimeout(total=timeout)
-        self.max_retries = max_retries
+        self.repo_url: str = BotData.REPO_URL.rstrip("/")
+        self.api_url: str = self._convert_to_api_url(self.repo_url)
+        self.timeout: aiohttp.ClientTimeout = aiohttp.ClientTimeout(
+            total=timeout
+        )
+        self.max_retries: int = max_retries
 
     def _convert_to_api_url(self, repo_url: str) -> str:
         """
@@ -152,7 +154,9 @@ class GitHubReleaseChecker:
         raise GitHubAPIError(f"Invalid GitHub URL format: {repo_url}")
 
     @asynccontextmanager
-    async def _get_session(self):
+    async def _get_session(
+        self,
+    ) -> AsyncGenerator[aiohttp.ClientSession, None]:
         """Context manager for aiohttp session."""
         async with aiohttp.ClientSession(
             timeout=self.timeout,
@@ -163,7 +167,7 @@ class GitHubReleaseChecker:
         ) as session:
             yield session
 
-    async def _fetch_with_retry(self, url: str) -> Optional[Dict[str, Any]]:
+    async def _fetch_with_retry(self, url: str) -> dict[str, Any] | None:
         """
         Fetch data from URL with retry logic.
 
@@ -173,7 +177,7 @@ class GitHubReleaseChecker:
         Returns:
             JSON response data or None if all attempts failed
         """
-        last_exception = None
+        last_exception: GitHubAPIError | None = None
 
         for attempt in range(self.max_retries):
             try:
@@ -184,11 +188,11 @@ class GitHubReleaseChecker:
                             return data
                         elif response.status == 404:
                             raise GitHubAPIError(
-                                f"Repository not found or no releases available (HTTP 404)"
+                                "Repository not found or no releases available (HTTP 404)"
                             )
                         elif response.status == 403:
                             raise GitHubAPIError(
-                                f"API rate limit exceeded (HTTP 403)"
+                                "API rate limit exceeded (HTTP 403)"
                             )
                         else:
                             raise GitHubAPIError(
@@ -215,9 +219,12 @@ class GitHubReleaseChecker:
         _logger.error(
             f"All {self.max_retries} attempts failed. Last error: {last_exception}"
         )
-        raise last_exception
+        if last_exception is not None:
+            raise last_exception
+        else:
+            raise GitHubAPIError("All retry attempts failed")
 
-    async def get_latest_release(self) -> Optional[ReleaseInfo]:
+    async def get_latest_release(self) -> ReleaseInfo | None:
         """
         Fetch the latest release information from GitHub API.
 
@@ -297,13 +304,13 @@ class GitHubReleaseChecker:
 
             if current_ver < latest_ver:
                 status = UpdateStatus.OUTDATED
-                message = f"🔴 Bot is outdated! Current: v{current_version}, Latest: {release_info.tag_name}"
+                message = f"🔴 Oh no! The bot's living in the past. Current: v{current_version}, Latest: {release_info.tag_name}"
             elif current_ver > latest_ver:
                 status = UpdateStatus.AHEAD
-                message = f"🟣 Bot is ahead of latest release! Current: v{current_version}, Latest: {release_info.tag_name}"
+                message = f"🟣 Time traveler detected! The bot's from the future. Current: v{current_version}, Latest: {release_info.tag_name}"
             else:
                 status = UpdateStatus.UP_TO_DATE
-                message = f"🟢 Bot is up to date! Version: v{current_version}"
+                message = f"🟢 All systems go! The bot is as fresh as it gets. Version: v{current_version}"
 
             return VersionComparison(
                 status=status,
