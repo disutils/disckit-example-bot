@@ -30,7 +30,7 @@ class HomeView(BaseView):
     async def home_button_callback(
         self,
         interaction: discord.Interaction,
-        button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[Any],
     ) -> None:
         """
         Callback for the home view button.
@@ -39,7 +39,7 @@ class HomeView(BaseView):
         ----------
         interaction : discord.Interaction
             The interaction object.
-        button : discord.ui.Button[BaseView]
+        button : discord.ui.Button[Any]
             The button that was clicked.
         """
         await interaction.response.send_message(

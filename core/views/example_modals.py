@@ -1,4 +1,4 @@
-from typing import override
+from typing import override, Any
 
 import discord
 from disckit.utils.embeds import SuccessEmbed
@@ -47,7 +47,7 @@ class ModalView(BaseModal):
             title=title, timeout=timeout, custom_id=custom_id, author=author
         )
 
-        self.input_field: discord.ui.TextInput[BaseModal] = (
+        self.input_field: discord.ui.TextInput[Any] = (
             discord.ui.TextInput(
                 label="Your Input",
                 placeholder="Enter something here...",

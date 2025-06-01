@@ -2,6 +2,7 @@ import discord
 from disckit.utils import SuccessEmbed
 from disckit.utils.ui import BaseView
 
+from typing import Any
 
 class DisableOnClickView(BaseView):
     """
@@ -28,7 +29,7 @@ class DisableOnClickView(BaseView):
     async def disable_button_callback(
         self,
         interaction: discord.Interaction,
-        button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[Any],
     ) -> None:
         """
         Callback to disable all buttons when clicked.
@@ -37,7 +38,7 @@ class DisableOnClickView(BaseView):
         ----------
         interaction : discord.Interaction
             The interaction object.
-        button : discord.ui.Button[BaseView]
+        button : discord.ui.Button[Any]
             The button that was clicked.
         """
         self.disable_all_items()
@@ -81,7 +82,7 @@ class DisableOnTimeoutView(BaseView):
     async def timeout_button_callback(
         self,
         interaction: discord.Interaction,
-        button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[Any],
     ) -> None:
         """
         Callback to handle button clicks before timeout.
@@ -90,7 +91,7 @@ class DisableOnTimeoutView(BaseView):
         ----------
         interaction : discord.Interaction
             The interaction object.
-        button : discord.ui.Button[BaseView]
+        button : discord.ui.Button[Any]
             The button that was clicked.
         """
         await interaction.response.send_message(
@@ -124,7 +125,7 @@ class MultiButtonView(BaseView):
     async def disable_all_callback(
         self,
         interaction: discord.Interaction,
-        button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[Any],
     ) -> None:
         """
         Callback to disable all buttons when clicked.
@@ -133,7 +134,7 @@ class MultiButtonView(BaseView):
         ----------
         interaction : discord.Interaction
             The interaction object.
-        button : discord.ui.Button[BaseView]
+        button : discord.ui.Button[Any]
             The button that was clicked.
         """
         self.disable_all_items()
@@ -147,7 +148,7 @@ class MultiButtonView(BaseView):
     async def do_nothing_callback(
         self,
         interaction: discord.Interaction,
-        button: discord.ui.Button[BaseView],
+        button: discord.ui.Button[Any],
     ) -> None:
         """
         Callback for a button that performs no action.
@@ -156,7 +157,7 @@ class MultiButtonView(BaseView):
         ----------
         interaction : discord.Interaction
             The interaction object.
-        button : discord.ui.Button[BaseView]
+        button : discord.ui.Button[Any]
             The button that was clicked.
         """
         await interaction.response.send_message(
