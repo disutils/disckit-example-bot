@@ -11,14 +11,17 @@ class BotData:
         The current version of the bot.
     SUPPORT_SERVER : str
         Link to the support server.
+    REPO_URL : str
+        The GitHub repository URL for version checking.
     AVATAR_URL : str or None
         Optional URL for the bot's avatar.
     """
 
-    VERSION: str = "0.9"  # The current version of the bot (currently based on the latest version of disckit)
+    VERSION: str = "0.9.3"  # The current version of the bot (currently based on the latest version of disckit)
     SUPPORT_SERVER: str = (
         "https://discord.gg/28RuT8WsKT"  # Link to the support server
     )
+    REPO_URL: str = "https://github.com/disutils/disckit-example-bot"  # GitHub repository URL
     AVATAR_URL: str | None = None  # Optional URL for the bot's avatar
 
 

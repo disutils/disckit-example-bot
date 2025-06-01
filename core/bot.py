@@ -6,20 +6,20 @@ from discord.ext import commands
 
 from core.config import OWNER_IDS, BotData
 from core.mention_tree import MentionTree
+from core.updater import check_bot_updates
 
 
 class Bot(commands.AutoShardedBot):
     """
     Represents the main bot instance.
 
-    This class extends `commands.AutoShardedBot` and provides custom behavior
-    for the bot's setup process, including command synchronization and dynamic
-    configuration updates.
+    This class extends `commands.AutoShardedBot` and provides custom behavior for the bot's setup process,
+    including command synchronization and dynamic configuration updates.
 
-    Parameters
+    Attributes
     ----------
-    intents : discord.Intents
-        The intents to be used by the bot for interacting with Discord.
+    tree : MentionTree
+        The custom command tree used for handling interactions.
     """
 
     def __init__(self, intents: discord.Intents) -> None:
@@ -44,19 +44,22 @@ class Bot(commands.AutoShardedBot):
     @override
     async def setup_hook(self) -> None:
         """
-        Handle bot setup after login.
+        Called when the bot logs in.
 
-        Synchronizes commands and updates bot-related configurations such as
-        the avatar URL and footer image.
-
-        Notes
-        -----
-        Updates `BotData.AVATAR_URL` and `UtilConfig.FOOTER_IMAGE` based on
-        the bot's avatar.
+        This method handles the synchronization of commands and updates bot-related configurations,
+        such as the avatar URL and footer image.
         """
-        synced_global = await self.tree.sync()
-        cmds = len(synced_global)
-        print(f"Synced {cmds} global commands.")
+        # from core.config import SYNC_GUILD_ID
+        #
+        # synced_global = await self.tree.sync()
+        # synced_guild = await self.tree.sync(
+        #     guild=discord.Object(SYNC_GUILD_ID)
+        # )
+        #
+        # global_cmds = len(synced_global)
+        # guild_cmds = len(synced_guild)
+        # print(f"Synced {global_cmds} global commands.")
+        # print(f"Synced {guild_cmds} guild commands.")
 
         if self.user is not None:
             if self.user.avatar:
@@ -68,3 +71,6 @@ class Bot(commands.AutoShardedBot):
             print(
                 f"\033[93m{self.user.name} has logged in successfully.\033[0m"
             )
+
+            # Check for updates after successful login
+            await check_bot_updates()
