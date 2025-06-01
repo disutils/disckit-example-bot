@@ -8,6 +8,7 @@ from core import Bot
 
 logger: logging.Logger = logging.getLogger(__name__)
 
+
 class EmbedCommands(BaseCog, name="Embed Commands"):
     """
     A cog for demonstrating different types of embed messages.
