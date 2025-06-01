@@ -15,6 +15,9 @@ This repository provides a reference implementation for using disckit in a clean
 * [`disckit`](https://pypi.org/project/disckit/)
 * [`uv`](https://pypi.org/project/uv/) for dependency management (optional, but recommended)
 
+> 💡 Want a deeper guide on using `uv`, setting up projects, or managing dependencies?
+> Check out the [Project-Management repository](https://github.com/disutils/Project-Management) — it covers these workflows in more detail.
+
 ## 🚀 Getting Started
 
 Clone this repo and install the requirements:
