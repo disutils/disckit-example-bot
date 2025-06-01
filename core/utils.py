@@ -47,13 +47,13 @@ def setup_logging() -> None:
     while len(log_files) > MAX_LOGS:
         os.remove(os.path.join(LOG_DIR, log_files.pop(0)))
 
-    _logger: logging.Logger = logging.getLogger(__name__)
+    logger: logging.Logger = logging.getLogger(__name__)
 
     # Set log level based on DEBUG and LOG_LEVEL
     if LOG_DEBUG:
-        _logger.setLevel(logging.DEBUG)
+        logger.setLevel(logging.DEBUG)
     else:
-        _logger.setLevel(getattr(logging, LOG_LEVEL.upper(), logging.INFO))
+        logger.setLevel(getattr(logging, LOG_LEVEL.upper(), logging.INFO))
 
     formatter = logging.Formatter(
         fmt="[%(asctime)s] [%(levelname)s] [%(name)s:%(lineno)d] %(message)s",
@@ -64,9 +64,9 @@ def setup_logging() -> None:
         LOG_FILE, maxBytes=MAX_LOG_SIZE, backupCount=MAX_LOGS
     )
     file_handler.setFormatter(formatter)
-    file_handler.setLevel(_logger.level)
+    file_handler.setLevel(logger.level)
 
-    _logger.addHandler(file_handler)
+    logger.addHandler(file_handler)
 
     for noisy_logger in [
         "httpx",

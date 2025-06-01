@@ -7,7 +7,7 @@ from discord import Interaction, app_commands
 
 from core import Bot
 
-_logger: logging.Logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class Examples(BaseCog, name="Examples"):
@@ -29,7 +29,7 @@ class Examples(BaseCog, name="Examples"):
         bot : Bot
             The bot instance.
         """
-        super().__init__(logger=_logger)
+        super().__init__(logger=logger)
         self.bot: Bot = bot
 
     @app_commands.command(name="autocomplete")

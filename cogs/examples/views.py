@@ -14,7 +14,7 @@ from core.views.example_views import (
 )
 from core.views.paginator_views import HomeView, get_extra_buttons
 
-_logger: logging.Logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class ViewCommands(BaseCog, name="View Commands"):
@@ -36,7 +36,7 @@ class ViewCommands(BaseCog, name="View Commands"):
         bot : Bot
             The bot instance.
         """
-        super().__init__(logger=_logger)
+        super().__init__(logger=logger)
         self.bot: Bot = bot
 
     view_cmds: app_commands.Group = app_commands.Group(

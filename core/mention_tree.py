@@ -7,7 +7,7 @@ from discord import app_commands
 from discord.ext import commands
 
 __all__ = ("MentionTree",)
-_logger: logging.Logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class MentionTree(app_commands.CommandTree):
@@ -232,7 +232,7 @@ class MentionTree(app_commands.CommandTree):
                 if mention:
                     yield command, mention
                 else:
-                    _logger.warning(
+                    logger.warning(
                         "Could not find a mention for command %s in the API. Are you out of sync?",
                         command,
                     )

@@ -28,7 +28,7 @@ load_dotenv()
 # Set up logging for the application
 setup_logging()
 
-_logger: logging.Logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 # Retrieve the Discord bot token from the environment variables
 TOKEN = os.getenv("TOKEN")
@@ -136,6 +136,6 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        _logger.info("KeyboardInterrupt detected.")
+        logger.info("KeyboardInterrupt detected.")
     except Exception as e:
-        _logger.exception(f"An error occurred: {e}")
+        logger.exception(f"An error occurred: {e}")
