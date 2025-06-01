@@ -1,24 +1,3 @@
-"""
-This module defines commands to demonstrate the usage of the `CoolDown` utility.
-
-Classes:
---------
-- CooldownCommands: A cog containing commands to showcase cooldown functionality.
-
-Functions:
-----------
-- setup(bot: Bot) -> None:
-    Asynchronously adds the `CooldownCommands` cog to the bot instance.
-
-Commands:
----------
-- cooldown user: Demonstrates a user-specific cooldown.
-- cooldown guild: Demonstrates a guild-specific cooldown.
-- cooldown channel: Demonstrates a channel-specific cooldown.
-- cooldown sku: Demonstrates a user-specific cooldown with SKU bypass.
-- cooldown reset: Resets the cooldown for a specific command.
-"""
-
 import logging
 
 from disckit.cogs import BaseCog
@@ -28,51 +7,27 @@ from discord import Interaction, app_commands
 
 from core import Bot
 
-logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class CooldownCommands(BaseCog, name="Cooldown Commands"):
     """
-    A cog to demonstrate the usage of the `CoolDown` utility.
+    A cog that provides command cooldown examples using various bucket types.
 
-    This cog contains commands that showcase different types of cooldowns,
-    including user-specific, guild-specific, channel-specific, and SKU-based cooldowns.
-    It also includes a command to reset a specific cooldown.
-
-    Attributes:
-    -----------
+    Parameters
+    ----------
     bot : Bot
-        The bot instance to which this cog is attached.
-
-    Methods:
-    --------
-    cooldown.user(interaction: Interaction) -> None:
-        Demonstrates a user-specific cooldown of 10 seconds.
-
-    cooldown.guild(interaction: Interaction) -> None:
-        Demonstrates a guild-specific cooldown of 20 seconds.
-
-    cooldown.channel(interaction: Interaction) -> None:
-        Demonstrates a channel-specific cooldown of 15 seconds.
-
-    cooldown.sku(interaction: Interaction) -> None:
-        Demonstrates a user-specific cooldown of 30 seconds, bypassable with a specific SKU.
-
-    cooldown.dynamic_cooldown(interaction: Interaction) -> None:
-        Dynamically adds cooldown to a specific user.
-
-    cooldown.reset(interaction: Interaction) -> None:
-        Resets the cooldown for the `user` command.
+        The bot instance.
     """
 
     def __init__(self, bot: Bot) -> None:
         """
-        Initializes the CooldownExamples cog.
+        Initialize the CooldownCommands cog.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         bot : Bot
-            The bot instance to which this cog is attached.
+            The bot instance.
         """
         super().__init__(logger=logger)
         self.bot: Bot = bot
@@ -87,12 +42,12 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @CoolDown.cooldown(time=10, bucket_type=CoolDownBucket.USER)
     async def user_cooldown(self, interaction: Interaction) -> None:
         """
-        A command with a user-specific cooldown of 10 seconds.
+        Responds with a message for a user-specific cooldown command.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         await interaction.response.send_message(
             embed=SuccessEmbed(
@@ -106,12 +61,12 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @CoolDown.cooldown(time=20, bucket_type=CoolDownBucket.GUILD)
     async def guild_cooldown(self, interaction: Interaction) -> None:
         """
-        A command with a guild-specific cooldown of 20 seconds.
+        Responds with a message for a guild-specific cooldown command.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         await interaction.response.send_message(
             embed=SuccessEmbed(
@@ -125,12 +80,12 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @CoolDown.cooldown(time=15, bucket_type=CoolDownBucket.CHANNEL)
     async def channel_cooldown(self, interaction: Interaction) -> None:
         """
-        A command with a channel-specific cooldown of 15 seconds.
+        Responds with a message for a channel-specific cooldown command.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         await interaction.response.send_message(
             embed=SuccessEmbed(
@@ -144,12 +99,12 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @CoolDown.cooldown(time=30, bucket_type=CoolDownBucket.USER, sku_id=12345)
     async def sku_cooldown(self, interaction: Interaction) -> None:
         """
-        A command with a user-specific cooldown of 30 seconds, bypassable with a specific SKU.
+        Responds with a message for a user cooldown that can be bypassed with a specific SKU.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         await interaction.response.send_message(
             embed=SuccessEmbed(
@@ -162,27 +117,24 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @cooldown_cmds.command(name="dynamic-cooldown")
     async def dynamic_cooldown(self, interaction: Interaction) -> None:
         """
-        Dynamically adds cooldown to a specific user.
+        Demonstrates dynamic cooldown logic based on user ID.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         if interaction.user.id == 1022085572719808542:
-            # Check if user of that ID is in cooldown or not
             allowed, cooldown_text = CoolDown.check(
                 interaction, CoolDownBucket.USER
             )
 
             if not allowed:
-                # If they are in cooldown, send an appropriate message
                 await interaction.response.send_message(
                     f"You can use the command in {cooldown_text}"
                 )
                 return
 
-            # If they are allowed, add the cooldown and continue the command
             CoolDown.add(25, interaction, CoolDownBucket.USER)
 
         await interaction.response.send_message("Testing dynamic cooldowns")
@@ -190,12 +142,12 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
     @cooldown_cmds.command(name="reset")
     async def reset_cooldown(self, interaction: Interaction) -> None:
         """
-        Resets the cooldown for the user on the `user` command.
+        Resets the user-specific cooldown for the 'user' command.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         reset = CoolDown.reset(
             interaction, bucket_type=CoolDownBucket.USER, command_name="user"
@@ -219,11 +171,11 @@ class CooldownCommands(BaseCog, name="Cooldown Commands"):
 
 async def setup(bot: Bot) -> None:
     """
-    Adds the CooldownCommands cog to the bot.
+    Set up the CooldownCommands cog.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
-        The bot instance to which the cog will be added.
+        The bot instance.
     """
     await bot.add_cog(CooldownCommands(bot))

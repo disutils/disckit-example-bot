@@ -1,24 +1,3 @@
-"""
-This module serves as the entry point for the Discord bot application. It initializes the bot, configures its settings,
-and starts the bot instance.
-
-Functions:
-----------
-- load_cogs(bot: Bot) -> None:
-    Loads cogs from the base cog directory.
-
-- custom_status(bot: Bot) -> tuple[str, ...]:
-    Defines custom status lines for the bot.
-
-- main() -> None:
-    Main entry point for the bot. Initializes and starts the bot instance.
-
-Constants:
-----------
-- TOKEN: The Discord bot token retrieved from environment variables.
-- intents: The Discord intents used by the bot for interacting with Discord.
-"""
-
 import asyncio
 import logging
 import os
@@ -60,12 +39,12 @@ intents = discord.Intents.all()
 
 async def load_cogs(bot: Bot) -> None:
     """
-    Loads cogs from the base cog directory.
+    Load all cogs from the specified cog directory.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
-        The bot instance to load cogs into.
+        The bot instance to which the cogs will be loaded.
     """
     for folder in os.listdir(COG_DIR):
         for cog in os.listdir(COG_DIR + "/" + folder):
@@ -76,20 +55,19 @@ async def load_cogs(bot: Bot) -> None:
 
 async def custom_status(bot: Any, *args: Any) -> tuple[str, ...]:
     """
-    Defines custom status lines for the bot.
+    Generate a custom status for the bot.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Any
-        The bot instance.
-
+        The bot instance for which the status is being generated.
     *args : Any
-        Additional arguments.
+        Additional arguments for the status function.
 
-    Returns:
-    --------
-    tuple[str, ...]
-        A tuple containing custom status lines for the bot.
+    Returns
+    -------
+    tuple of str
+        A tuple containing status messages to be displayed.
     """
     return (
         f"version {BotData.VERSION}",
@@ -100,9 +78,15 @@ async def custom_status(bot: Any, *args: Any) -> tuple[str, ...]:
 
 async def main() -> None:
     """
-    Main entry point for the bot.
+    The main entry point for the bot application.
 
-    Initializes the bot instance, configures its settings, loads cogs, and starts the bot.
+    This function initializes the bot, configures settings, loads cogs,
+    and starts the bot using the provided token.
+
+    Raises
+    ------
+    ValueError
+        If the Discord bot token is not set in the environment variables.
     """
     bot = Bot(intents=intents)
 

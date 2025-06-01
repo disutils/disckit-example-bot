@@ -1,29 +1,3 @@
-"""
-This module defines the core `Bot` class for the Discord bot, which extends the `commands.AutoShardedBot` class.
-It includes custom behavior for command synchronization and bot setup.
-
-Classes:
---------
-- Bot: Represents the main bot instance with custom setup logic and configurations.
-
-Classes Details:
-----------------
-- Bot:
-    Attributes:
-    -----------
-    - tree : MentionTree
-        The custom command tree used for handling interactions.
-
-    Methods:
-    --------
-    - __init__(intents: discord.Intents) -> None:
-        Initializes the bot instance with the specified intents and configurations.
-
-    - setup_hook() -> None:
-        Called when the bot logs in. Handles command synchronization and updates bot-related configurations,
-        such as the avatar URL and footer image.
-"""
-
 from typing import override
 
 import discord
@@ -41,26 +15,18 @@ class Bot(commands.AutoShardedBot):
     This class extends `commands.AutoShardedBot` and provides custom behavior for the bot's setup process,
     including command synchronization and dynamic configuration updates.
 
-    Attributes:
-    -----------
-    tree : MentionTree
-        The custom command tree used for handling interactions.
-
-    Methods:
-    --------
-    __init__(intents: discord.Intents) -> None:
-        Initializes the bot instance with the specified intents and configurations.
-
-    setup_hook() -> None:
-        Called when the bot logs in. Handles command synchronization and updates bot-related configurations.
+    Parameters
+    ----------
+    intents : discord.Intents
+        The intents to be used by the bot for interacting with Discord.
     """
 
     def __init__(self, intents: discord.Intents) -> None:
         """
-        Initializes the bot instance.
+        Initialize the bot instance.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         intents : discord.Intents
             The intents to be used by the bot for interacting with Discord.
         """
@@ -77,10 +43,13 @@ class Bot(commands.AutoShardedBot):
     @override
     async def setup_hook(self) -> None:
         """
-        Called when the bot logs in.
+        Handle bot setup after login.
 
-        This method handles the synchronization of commands and updates bot-related configurations,
-        such as the avatar URL and footer image.
+        Synchronizes commands and updates bot-related configurations such as the avatar URL and footer image.
+
+        Notes
+        -----
+        Updates `BotData.AVATAR_URL` and `UtilConfig.FOOTER_IMAGE` based on the bot's avatar.
         """
         synced_global = await self.tree.sync()
         cmds = len(synced_global)

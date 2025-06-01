@@ -1,30 +1,12 @@
-"""
-This module defines configuration constants and classes for the Discord bot.
-
-Classes:
---------
-- BotData: Contains metadata and dynamic properties related to the bot.
-
-Constants:
-----------
-- OWNER_IDS: A set of user IDs for the bot's owners.
-- FOOTER_TEXT: Footer text for embeds, dynamically includes the current year.
-- COG_DIR: The base directory of the cogs to be loaded.
-- LOGGING_CONFIG: Configuration for logging (directory, file, levels, etc.).
-- LOG_CHANNEL: Channel ID for general logs.
-- EMBED_COLORS: Colors used for embeds (main, success, error).
-"""
-
 from discord import utils
 
 
-# Bot Metadata
 class BotData:
     """
     Contains metadata and dynamic properties related to the bot.
 
-    Attributes:
-    -----------
+    Attributes
+    ----------
     VERSION : str
         The current version of the bot.
     SUPPORT_SERVER : str

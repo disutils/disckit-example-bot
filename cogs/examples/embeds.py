@@ -1,22 +1,3 @@
-"""
-This module defines commands related to embeds for the `EmbedCommands` cog.
-
-Classes:
---------
-- EmbedCommands: A cog containing commands related to embeds.
-
-Functions:
-----------
-- setup(bot: Bot) -> None:
-    Asynchronously adds the `EmbedCommands` cog to the bot instance.
-
-Commands:
----------
-- embed main-embed: Demonstrates a main embed.
-- embed success-embed: Demonstrates a success embed.
-- embed error-embed: Demonstrates an error embed.
-"""
-
 import logging
 
 from disckit.cogs import BaseCog
@@ -25,31 +6,27 @@ from discord import Interaction, app_commands
 
 from core import Bot
 
-logger = logging.getLogger(__name__)
-
+logger: logging.Logger = logging.getLogger(__name__)
 
 class EmbedCommands(BaseCog, name="Embed Commands"):
     """
-    A cog containing commands related to embeds.
+    A cog for demonstrating different types of embed messages.
 
-    Attributes:
-    -----------
-    embed_cmds : app_commands.Group
-        A command group for embed-related commands.
-
-    Methods:
-    --------
-    main_embed(interaction: Interaction) -> None:
-        Demonstrates a main embed.
-
-    success_embed(interaction: Interaction) -> None:
-        Demonstrates a success embed.
-
-    error_embed(interaction: Interaction) -> None:
-        Demonstrates an error embed.
+    Parameters
+    ----------
+    bot : Bot
+        The bot instance.
     """
 
     def __init__(self, bot: Bot) -> None:
+        """
+        Initialize the EmbedCommands cog.
+
+        Parameters
+        ----------
+        bot : Bot
+            The bot instance.
+        """
         super().__init__(logger=logger)
         self.bot: Bot = bot
 
@@ -62,12 +39,12 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
     @embed_cmds.command(name="main-embed")
     async def main_embed(self, interaction: Interaction) -> None:
         """
-        An example of a main embed.
+        Send a main embed with example content.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         embed = MainEmbed(
             "Main Embed Example",
@@ -80,12 +57,12 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
     @embed_cmds.command(name="success-embed")
     async def success_embed(self, interaction: Interaction) -> None:
         """
-        An example of a success embed.
+        Send a success embed with example content.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         embed = SuccessEmbed(
             "Success Embed Example",
@@ -98,12 +75,12 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
     @embed_cmds.command(name="error-embed")
     async def error_embed(self, interaction: Interaction) -> None:
         """
-        An example of an error embed.
+        Send an error embed with example content.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The Discord interaction.
         """
         embed = ErrorEmbed(
             "Error Embed Example",
@@ -116,11 +93,11 @@ class EmbedCommands(BaseCog, name="Embed Commands"):
 
 async def setup(bot: Bot) -> None:
     """
-    Asynchronously adds the `EmbedCommands` cog to the bot instance.
+    Set up the EmbedCommands cog.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
-        The bot instance to add the cog to.
+        The bot instance.
     """
     await bot.add_cog(EmbedCommands(bot))

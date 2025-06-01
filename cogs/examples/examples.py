@@ -1,23 +1,3 @@
-"""
-This module defines the `Examples` cog for the Discord bot, showcasing various utilities provided by `disckit.utils`.
-
-Classes:
---------
-- Examples: A cog containing example commands for utilities like embeds, autocomplete, decorators, and views.
-
-Functions:
-----------
-- setup(bot: Bot) -> None:
-    Asynchronously adds the `Examples` cog to the bot instance.
-
-Commands:
----------
-- autocomplete: Demonstrates the autocomplete utility.
-- sku-check: Demonstrates the SKU check utility.
-- disallow-bots: Demonstrates the disallow bots decorator.
-- is-owner: Demonstrates the is_owner decorator.
-"""
-
 import logging
 
 import discord
@@ -27,34 +7,28 @@ from discord import Interaction, app_commands
 
 from core import Bot
 
-logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class Examples(BaseCog, name="Examples"):
     """
-    A cog containing examples for all utilities in `disckit.utils`.
+    A cog that provides usage examples of utility functions from `disckit.utils`.
 
-    Attributes:
-    -----------
+    Parameters
+    ----------
     bot : Bot
-        The bot instance associated with this cog.
-
-    Methods:
-    --------
-    autocomplete_example(interaction: Interaction, choice: str) -> None:
-        Demonstrates the autocomplete utility.
-
-    sku_check_example(interaction: Interaction, sku_id: int, user_id: int) -> None:
-        Demonstrates the SKU check utility.
-
-    disallow_bots_example(interaction: Interaction, user: discord.User) -> None:
-        Demonstrates the disallow bots decorator.
-
-    is_owner_example(interaction: Interaction) -> None:
-        Demonstrates the is_owner decorator.
+        The bot instance.
     """
 
     def __init__(self, bot: Bot) -> None:
+        """
+        Initialize the Examples cog.
+
+        Parameters
+        ----------
+        bot : Bot
+            The bot instance.
+        """
         super().__init__(logger=logger)
         self.bot: Bot = bot
 
@@ -68,7 +42,16 @@ class Examples(BaseCog, name="Examples"):
     async def autocomplete_example(
         self, interaction: Interaction, choice: str
     ) -> None:
-        """An example of the autocomplete utility."""
+        """
+        Responds with the selected autocomplete option.
+
+        Parameters
+        ----------
+        interaction : Interaction
+            The Discord interaction.
+        choice : str
+            The selected option from the autocomplete list.
+        """
         await interaction.response.send_message(f"You selected: {choice}")
 
     @app_commands.command(name="sku-check")
@@ -79,7 +62,18 @@ class Examples(BaseCog, name="Examples"):
     async def sku_check_example(
         self, interaction: Interaction, sku_id: int, user_id: int
     ) -> None:
-        """An example of the SKU check utility."""
+        """
+        Checks whether the given user has access to a specified SKU.
+
+        Parameters
+        ----------
+        interaction : Interaction
+            The Discord interaction.
+        sku_id : int
+            The SKU ID to check.
+        user_id : int
+            The user ID to check against the SKU.
+        """
         has_sku = await sku_check(self.bot, sku_id, user_id)
         await interaction.response.send_message(f"User has SKU: {has_sku}")
 
@@ -89,23 +83,39 @@ class Examples(BaseCog, name="Examples"):
     async def disallow_bots_example(
         self, interaction: Interaction, user: discord.User
     ) -> None:
-        """An example of the disallow bots decorator."""
+        """
+        Sends the username of a human user, disallowing bot accounts.
+
+        Parameters
+        ----------
+        interaction : Interaction
+            The Discord interaction.
+        user : discord.User
+            The Discord user provided in the command.
+        """
         await interaction.response.send_message(f"User: {user.name}")
 
     @app_commands.command(name="is-owner")
     @is_owner
     async def is_owner_example(self, interaction: Interaction) -> None:
-        """An example of the is_owner decorator."""
+        """
+        Confirms the invoking user is the bot owner.
+
+        Parameters
+        ----------
+        interaction : Interaction
+            The Discord interaction.
+        """
         await interaction.response.send_message("You are the owner!")
 
 
 async def setup(bot: Bot) -> None:
     """
-    Asynchronously adds the `Examples` cog to the bot instance.
+    Set up the Examples cog.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
-        The bot instance to add the cog to.
+        The bot instance.
     """
     await bot.add_cog(Examples(bot))

@@ -1,21 +1,3 @@
-"""
-This module provides a utility function for setting up logging in the application.
-
-Functions:
-----------
-- setup_logging() -> None:
-    Configures logging with a rotating file handler, manages log file rotation, and suppresses noisy loggers.
-
-Constants:
-----------
-- LOG_DIR: The directory where log files are stored.
-- LOG_FILE: The name of the main log file.
-- MAX_LOG_SIZE: The maximum size of a single log file (in bytes).
-- MAX_LOGS: The maximum number of log files to retain.
-- LOG_LEVEL: The logging level for the application.
-- DEBUG: A flag to enable or disable debug mode.
-"""
-
 import logging
 import os
 from datetime import datetime
@@ -33,16 +15,23 @@ from core.config import (
 
 def setup_logging() -> None:
     """
-    Configures logging for the application.
+    Configure logging for the application.
 
-    This function performs the following steps:
-    1. Ensures the log directory exists.
-    2. Rotates the current log file by renaming it with a timestamp.
-    3. Removes excess log files beyond the maximum allowed.
-    4. Configures the root logger with a rotating file handler.
-    5. Suppresses logging for noisy third-party libraries.
+    This function ensures the log directory exists, rotates old log files, removes excess logs,
+    and sets up a rotating file handler for the root logger. It also suppresses logging for
+    noisy third-party libraries.
 
-    If DEBUG is True, the logging level is set to DEBUG regardless of LOG_LEVEL.
+    Steps
+    -----
+    1. Ensure the log directory exists.
+    2. Rotate the current log file by renaming it with a timestamp.
+    3. Remove excess log files beyond the maximum allowed.
+    4. Configure the root logger with a rotating file handler.
+    5. Suppress logging for noisy third-party libraries.
+
+    Notes
+    -----
+    If `LOG_DEBUG` is True, the logging level is set to DEBUG regardless of `LOG_LEVEL`.
     """
     os.makedirs(LOG_DIR, exist_ok=True)
 

@@ -1,31 +1,3 @@
-"""
-This module defines a custom `ModalView` class for enhanced modal interactions.
-
-Classes:
---------
-- ModalView: A custom modal view that extends `BaseModal` to provide advanced interaction handling.
-
-Attributes:
------------
-- title : str
-    The title of the modal (up to 45 characters).
-- timeout : float | None
-    Timeout in seconds before the modal stops accepting input.
-- custom_id : str
-    The custom ID of the modal (up to 100 characters).
-- author : int | discord.User | discord.Member | None
-    The author of the modal, restricting usage to the specified user.
-
-Methods:
---------
-- interaction_check(interaction: discord.Interaction) -> bool:
-    Ensures the interaction is from the authorized user.
-- on_error(interaction: discord.Interaction, error: Exception) -> None:
-    Handles errors that occur during modal interactions.
-- on_submit(interaction: discord.Interaction) -> None:
-    Handles the submission of the modal.
-"""
-
 from typing import override
 
 import discord
@@ -35,26 +7,18 @@ from disckit.utils.ui import BaseModal
 
 class ModalView(BaseModal):
     """
-    A custom modal view that extends `BaseModal` to provide advanced interaction handling.
+    A custom modal view extending BaseModal for advanced interaction handling.
 
-    Attributes:
-    -----------
-    title : str
-        The title of the modal (up to 45 characters).
-    timeout : float | None
-        Timeout in seconds before the modal stops accepting input.
-    custom_id : str
-        The custom ID of the modal (up to 100 characters).
-    author : int | discord.User | discord.Member | None
-        The author of the modal, restricting usage to the specified user.
-
-    Methods:
-    --------
-    interaction_check(interaction: discord.Interaction) -> bool:
-        Ensures the interaction is from the authorized user.
-
-    on_error(interaction: discord.Interaction, error: Exception) -> None:
-        Handles errors that occur during modal interactions.
+    Parameters
+    ----------
+    title : str, optional
+        The title of the modal (default is "Default Modal").
+    timeout : float or None, optional
+        Timeout in seconds before the modal stops accepting input (default is None).
+    custom_id : str, optional
+        The custom ID of the modal (default is "modal_view").
+    author : int or discord.User or discord.Member or None, optional
+        The author restricting usage to a specific user (default is None).
     """
 
     def __init__(
@@ -66,18 +30,18 @@ class ModalView(BaseModal):
         author: int | discord.User | discord.Member | None = None,
     ) -> None:
         """
-        Initializes the ModalView.
+        Initialize the ModalView instance.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         title : str
             The title of the modal.
-        timeout : float | None
+        timeout : float or None
             Timeout in seconds before the modal stops accepting input.
         custom_id : str
             The custom ID of the modal.
-        author : int | discord.User | discord.Member | None
-            The author of the modal, restricting usage to the specified user.
+        author : int or discord.User or discord.Member or None
+            The author of the modal.
         """
         super().__init__(
             title=title, timeout=timeout, custom_id=custom_id, author=author
@@ -95,10 +59,10 @@ class ModalView(BaseModal):
     @override
     async def on_submit(self, interaction: discord.Interaction) -> None:
         """
-        Handles the submission of the modal.
+        Handle the submission of the modal.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : discord.Interaction
             The interaction that triggered the modal submission.
         """

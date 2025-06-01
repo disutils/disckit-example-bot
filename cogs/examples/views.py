@@ -1,24 +1,3 @@
-"""
-This module defines commands related to views for the `ViewCommands` cog.
-
-Classes:
---------
-- ViewCommands: A cog containing commands related to views.
-
-Functions:
-----------
-- setup(bot: Bot) -> None:
-    Asynchronously adds the `ViewCommands` cog to the bot instance.
-
-Commands:
----------
-- view disable-on-click: Demonstrates a view that disables all buttons on click.
-- view disable-on-timeout: Demonstrates a view that disables all buttons on timeout.
-- view multi-button: Demonstrates a view with multiple buttons and behaviors.
-- view modal-example: Demonstrates a modal interaction.
-- view paginator-example: Demonstrates a paginator interaction.
-"""
-
 import logging
 
 from disckit.cogs import BaseCog
@@ -35,34 +14,30 @@ from core.views.example_views import (
 )
 from core.views.paginator_views import HomeView, get_extra_buttons
 
-logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class ViewCommands(BaseCog, name="View Commands"):
     """
-    A cog containing commands related to views.
+    A cog containing view-related commands.
 
-    Attributes:
-    -----------
+    Attributes
+    ----------
+    bot : Bot
+        The bot instance to which this cog is attached.
     view_cmds : app_commands.Group
-        A command group for view-related commands.
-
-    Methods:
-    --------
-    disable_on_click(interaction: Interaction) -> None:
-        Demonstrates a view that disables all buttons on click.
-
-    disable_on_timeout(interaction: Interaction) -> None:
-        Demonstrates a view that disables all buttons on timeout.
-
-    multi_button(interaction: Interaction) -> None:
-        Demonstrates a view with multiple buttons and behaviors.
-
-    modal_example(interaction: Interaction) -> None:
-        Demonstrates a modal interaction.
+        The command group for view-related commands.
     """
 
     def __init__(self, bot: Bot) -> None:
+        """
+        Initialize the ViewCommands cog.
+
+        Parameters
+        ----------
+        bot : Bot
+            The bot instance to which this cog is attached.
+        """
         super().__init__(logger=logger)
         self.bot: Bot = bot
 
@@ -75,66 +50,60 @@ class ViewCommands(BaseCog, name="View Commands"):
     @view_cmds.command(name="disable-on-click")
     async def disable_on_click(self, interaction: Interaction) -> None:
         """
-        An example of a view that disables all buttons on click.
+        Sends a view that disables all buttons once one is clicked.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The interaction that invoked this command.
         """
         view = DisableOnClickView(author=interaction.user)
         await interaction.response.send_message(
             "Here is a view that disables on click:", view=view
         )
-        view.message = (
-            await interaction.original_response()
-        )  # Required for the view to work properly
+        view.message = await interaction.original_response()
 
     @view_cmds.command(name="disable-on-timeout")
     async def disable_on_timeout(self, interaction: Interaction) -> None:
         """
-        An example of a view that disables all buttons on timeout.
+        Sends a view that disables all buttons after a timeout.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The interaction that invoked this command.
         """
         view = DisableOnTimeoutView(author=interaction.user, timeout=10.0)
         await interaction.response.send_message(
             "Here is a view that disables on timeout:", view=view
         )
-        view.message = (
-            await interaction.original_response()
-        )  # Required for the view to work properly
+        view.message = await interaction.original_response()
 
     @view_cmds.command(name="multi-button")
     async def multi_button(self, interaction: Interaction) -> None:
         """
-        An example of a view with multiple buttons and behaviors.
+        Sends a view with multiple interactive buttons.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The interaction that invoked this command.
         """
         view = MultiButtonView(author=interaction.user)
         await interaction.response.send_message(
             "Here is a view with multiple buttons:", view=view
         )
-        view.message = (
-            await interaction.original_response()
-        )  # Required for the view to work properly
+        view.message = await interaction.original_response()
 
     @view_cmds.command(name="modal-example")
     async def modal_example(self, interaction: Interaction) -> None:
         """
-        An example of a modal interaction.
+        Sends an example modal view to the user.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The interaction that invoked this command.
         """
         modal = ModalView(
             title="Example Modal",
@@ -145,12 +114,12 @@ class ViewCommands(BaseCog, name="View Commands"):
     @view_cmds.command(name="paginator-example")
     async def paginator_example(self, interaction: Interaction) -> None:
         """
-        An example of a paginator interaction.
+        Starts a paginator session with multiple pages.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         interaction : Interaction
-            The interaction that triggered this command.
+            The interaction that invoked this command.
         """
         pages = [
             "Page 1: Welcome to the paginator!",
@@ -173,10 +142,10 @@ class ViewCommands(BaseCog, name="View Commands"):
 
 async def setup(bot: Bot) -> None:
     """
-    Asynchronously adds the `ViewCommands` cog to the bot instance.
+    Asynchronously adds the ViewCommands cog to the bot instance.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     bot : Bot
         The bot instance to add the cog to.
     """
