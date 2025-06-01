@@ -59,7 +59,9 @@ class ViewCommands(BaseCog, name="View Commands"):
         await interaction.response.send_message(
             "Here is a view that disables on click:", view=view
         )
-        view.message = await interaction.original_response() # Required to store the message for later updates
+        view.message = (
+            await interaction.original_response()
+        )  # Required to store the message for later updates
 
     @view_cmds.command(name="disable-on-timeout")
     async def disable_on_timeout(self, interaction: Interaction) -> None:
@@ -75,7 +77,9 @@ class ViewCommands(BaseCog, name="View Commands"):
         await interaction.response.send_message(
             "Here is a view that disables on timeout:", view=view
         )
-        view.message = await interaction.original_response() # Required to store the message for later updates
+        view.message = (
+            await interaction.original_response()
+        )  # Required to store the message for later updates
 
     @view_cmds.command(name="multi-button")
     async def multi_button(self, interaction: Interaction) -> None:
@@ -91,7 +95,9 @@ class ViewCommands(BaseCog, name="View Commands"):
         await interaction.response.send_message(
             "Here is a view with multiple buttons:", view=view
         )
-        view.message = await interaction.original_response() # Required to store the message for later updates
+        view.message = (
+            await interaction.original_response()
+        )  # Required to store the message for later updates
 
     @view_cmds.command(name="modal-example")
     async def modal_example(self, interaction: Interaction) -> None:
