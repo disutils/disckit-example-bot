@@ -121,7 +121,7 @@ class ViewCommands(BaseCog, name="View Commands"):
         interaction : Interaction
             The interaction that invoked this command.
         """
-        pages = [
+        pages: list[MainEmbed | str] = [
             "Page 1: Welcome to the paginator!",
             "Page 2: This is the second page.",
             "Page 3: You can add as many pages as you want.",
