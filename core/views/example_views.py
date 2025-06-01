@@ -1,8 +1,9 @@
+from typing import Any
+
 import discord
 from disckit.utils import SuccessEmbed
 from disckit.utils.ui import BaseView
 
-from typing import Any
 
 class DisableOnClickView(BaseView):
     """
