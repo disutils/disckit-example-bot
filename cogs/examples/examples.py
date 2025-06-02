@@ -79,7 +79,7 @@ class Examples(BaseCog, name="Examples"):
 
     @app_commands.command(name="disallow-bots")
     @app_commands.describe(user="The Discord user to check.")
-    @disallow_bots
+    @disallow_bots()
     async def disallow_bots_example(
         self, interaction: Interaction, user: discord.User
     ) -> None:
@@ -96,7 +96,7 @@ class Examples(BaseCog, name="Examples"):
         await interaction.response.send_message(f"User: {user.name}")
 
     @app_commands.command(name="is-owner")
-    @is_owner
+    @is_owner()
     async def is_owner_example(self, interaction: Interaction) -> None:
         """
         Demonstrate a command restricted to the bot owner.
