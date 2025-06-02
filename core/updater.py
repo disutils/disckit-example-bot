@@ -14,12 +14,28 @@ from packaging.version import InvalidVersion
 
 from core.config import BotData
 
-_logger = logging.getLogger(__name__)
+_logger: logging.Logger = logging.getLogger(__name__)
 
 
 class UpdateStatus(Enum):
-    """Enumeration of possible update statuses."""
+    """
+    Enumeration of possible update statuses.
 
+    Attributes
+    ----------
+    UP_TO_DATE : str
+        Indicates the bot is up to date.
+    OUTDATED : str
+        Indicates the bot is outdated.
+    AHEAD : str
+        Indicates the bot is ahead of the latest release.
+    ERROR : str
+        Indicates an error occurred during the update check.
+    FETCH_FAILED : str
+        Indicates the fetch operation failed.
+    INVALID_VERSION : str
+        Indicates an invalid version format.
+    """
     UP_TO_DATE = "up_to_date"
     OUTDATED = "outdated"
     AHEAD = "ahead"
@@ -29,20 +45,53 @@ class UpdateStatus(Enum):
 
 
 class ColorCode(Enum):
-    """ANSI color codes for terminal output."""
+    """
+    ANSI color codes for terminal output.
 
-    GREEN = "\033[92m"  # Success/Up to date
-    RED = "\033[91m"  # Error/Outdated
-    BLUE = "\033[94m"  # Info/URLs
-    PURPLE = "\033[95m"  # Ahead version
-    CYAN = "\033[96m"  # General info
-    WHITE = "\033[97m"  # Neutral
-    RESET = "\033[0m"  # Reset color
+    Attributes
+    ----------
+    GREEN : str
+        Color code for success/up-to-date messages.
+    RED : str
+        Color code for error/outdated messages.
+    BLUE : str
+        Color code for informational URLs.
+    PURPLE : str
+        Color code for ahead version messages.
+    CYAN : str
+        Color code for general information.
+    WHITE : str
+        Color code for neutral messages.
+    RESET : str
+        Color code to reset terminal color.
+    """
+    GREEN = "\033[92m"
+    RED = "\033[91m"
+    BLUE = "\033[94m"
+    PURPLE = "\033[95m"
+    CYAN = "\033[96m"
+    WHITE = "\033[97m"
+    RESET = "\033[0m"
 
 
 @dataclass
 class ReleaseInfo:
-    """Data class for GitHub release information."""
+    """
+    Data class for GitHub release information.
+
+    Attributes
+    ----------
+    tag_name : str
+        The tag name of the release.
+    name : str
+        The name of the release.
+    html_url : str
+        The URL of the release on GitHub.
+    published_at : str
+        The publication date of the release.
+    body : str
+        The body text of the release notes.
+    """
 
     tag_name: str
     name: str
@@ -52,15 +101,39 @@ class ReleaseInfo:
 
     @property
     def truncated_body(self) -> str:
-        """Get truncated release notes."""
-        if len(self.body) > 500:
-            return self.body[:500] + "..."
-        return self.body
+        """
+        Get truncated release notes.
+
+        Returns
+        -------
+        str
+            The truncated release notes, limited to 500 characters.
+        """
+        return self.body[:500] + "..." if len(self.body) > 500 else self.body
 
 
 @dataclass
 class VersionComparison:
-    """Data class for version comparison results."""
+    """
+    Data class for version comparison results.
+
+    Attributes
+    ----------
+    status : UpdateStatus
+        The update status of the bot.
+    message : str
+        A message describing the update status.
+    current_version : str
+        The current version of the bot.
+    latest_version : str
+        The latest version available on GitHub.
+    current_normalized : str
+        The normalized current version.
+    latest_normalized : str
+        The normalized latest version.
+    release_info : ReleaseInfo or None
+        Information about the latest release, if available.
+    """
 
     status: UpdateStatus
     message: str
@@ -71,7 +144,14 @@ class VersionComparison:
     release_info: ReleaseInfo | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for backward compatibility."""
+        """
+        Convert the version comparison result to a dictionary.
+
+        Returns
+        -------
+        dict
+            A dictionary representation of the version comparison result.
+        """
         result = {
             "status": self.status.value,
             "message": self.message,
@@ -95,30 +175,32 @@ class VersionComparison:
 
 
 class GitHubAPIError(Exception):
-    """Custom exception for GitHub API related errors."""
-
+    """
+    Custom exception for GitHub API related errors.
+    """
     pass
 
 
 class VersionParsingError(Exception):
-    """Custom exception for version parsing errors."""
-
+    """
+    Custom exception for version parsing errors.
+    """
     pass
 
 
 class GitHubReleaseChecker:
     """
     Enhanced GitHub release checker with improved error handling and type safety.
+
+    Parameters
+    ----------
+    timeout : int, optional
+        Request timeout in seconds (default is 10).
+    max_retries : int, optional
+        Maximum number of retry attempts (default is 3).
     """
 
     def __init__(self, timeout: int = 10, max_retries: int = 3) -> None:
-        """
-        Initialize the GitHub release checker.
-
-        Args:
-            timeout: Request timeout in seconds
-            max_retries: Maximum number of retry attempts
-        """
         self.repo_url: str = BotData.REPO_URL.rstrip("/")
         self.api_url: str = self._convert_to_api_url(self.repo_url)
         self.timeout: aiohttp.ClientTimeout = aiohttp.ClientTimeout(
@@ -130,14 +212,20 @@ class GitHubReleaseChecker:
         """
         Convert a GitHub repository URL to the API URL for releases.
 
-        Args:
-            repo_url: The GitHub repository URL
+        Parameters
+        ----------
+        repo_url : str
+            The GitHub repository URL.
 
-        Returns:
-            The GitHub API URL for releases
+        Returns
+        -------
+        str
+            The GitHub API URL for releases.
 
-        Raises:
-            GitHubAPIError: If the URL format is invalid
+        Raises
+        ------
+        GitHubAPIError
+            If the URL format is invalid.
         """
         patterns = [
             r"github\.com[:/]([^/]+)/([^/]+?)(?:\.git)?/?$",
@@ -157,7 +245,14 @@ class GitHubReleaseChecker:
     async def _get_session(
         self,
     ) -> AsyncGenerator[aiohttp.ClientSession, None]:
-        """Context manager for aiohttp session."""
+        """
+        Context manager for aiohttp session.
+
+        Yields
+        ------
+        aiohttp.ClientSession
+            An aiohttp client session.
+        """
         async with aiohttp.ClientSession(
             timeout=self.timeout,
             headers={
@@ -171,11 +266,20 @@ class GitHubReleaseChecker:
         """
         Fetch data from URL with retry logic.
 
-        Args:
-            url: The URL to fetch
+        Parameters
+        ----------
+        url : str
+            The URL to fetch.
 
-        Returns:
-            JSON response data or None if all attempts failed
+        Returns
+        -------
+        dict or None
+            JSON response data or None if all attempts failed.
+
+        Raises
+        ------
+        GitHubAPIError
+            If all retry attempts fail.
         """
         last_exception: GitHubAPIError | None = None
 
@@ -228,11 +332,15 @@ class GitHubReleaseChecker:
         """
         Fetch the latest release information from GitHub API.
 
-        Returns:
-            ReleaseInfo object or None if fetch failed
+        Returns
+        -------
+        ReleaseInfo or None
+            ReleaseInfo object or None if fetch failed.
 
-        Raises:
-            GitHubAPIError: If API request fails
+        Raises
+        ------
+        GitHubAPIError
+            If API request fails.
         """
         try:
             data = await self._fetch_with_retry(self.api_url)
@@ -256,11 +364,15 @@ class GitHubReleaseChecker:
         """
         Normalize version string by removing common prefixes and cleaning format.
 
-        Args:
-            version_str: The version string to normalize
+        Parameters
+        ----------
+        version_str : str
+            The version string to normalize.
 
-        Returns:
-            The normalized version string
+        Returns
+        -------
+        str
+            The normalized version string.
         """
         if not version_str or not isinstance(version_str, str):
             return "0.0.0"
@@ -288,12 +400,17 @@ class GitHubReleaseChecker:
         """
         Compare current version with latest version.
 
-        Args:
-            current_version: The current bot version
-            release_info: Release information from GitHub
+        Parameters
+        ----------
+        current_version : str
+            The current bot version.
+        release_info : ReleaseInfo
+            Release information from GitHub.
 
-        Returns:
-            VersionComparison object with comparison results
+        Returns
+        -------
+        VersionComparison
+            VersionComparison object with comparison results.
         """
         try:
             current_norm = self._normalize_version(current_version)
@@ -349,8 +466,10 @@ class GitHubReleaseChecker:
         """
         Check if the bot is up to date with the latest GitHub release.
 
-        Returns:
-            VersionComparison object with update check results
+        Returns
+        -------
+        VersionComparison
+            VersionComparison object with update check results.
         """
         try:
             release_info = await self.get_latest_release()
@@ -390,7 +509,16 @@ class GitHubReleaseChecker:
 
 
 def _print_colored(message: str, color: ColorCode) -> None:
-    """Print a colored message to the console."""
+    """
+    Print a colored message to the console.
+
+    Parameters
+    ----------
+    message : str
+        The message to print.
+    color : ColorCode
+        The color code to use for the message.
+    """
     print(f"{color.value}{message}{ColorCode.RESET.value}")
 
 
@@ -398,11 +526,15 @@ def _format_date(iso_date_string: str) -> str:
     """
     Convert ISO date string to friendly date format.
 
-    Args:
-        iso_date_string: ISO format date string (e.g., "2025-06-01T09:11:43Z")
+    Parameters
+    ----------
+    iso_date_string : str
+        ISO format date string (e.g., "2025-06-01T09:11:43Z").
 
-    Returns:
-        Formatted date string (e.g., "6/1/2025")
+    Returns
+    -------
+    str
+        Formatted date string (e.g., "6/1/2025").
     """
     if not iso_date_string:
         return "Unknown"
