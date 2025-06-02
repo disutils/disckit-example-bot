@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "disckit==0.9",
+    "disckit==1.0.0",
     "discord-py>=2.5.2",
     "packaging>=25.0",
     "pyfiglet>=1.0.2",
