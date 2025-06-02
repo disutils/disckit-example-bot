@@ -1,6 +1,6 @@
 # disckit-example-bot
 
-![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-blue)
+![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue)
 
 This is a simple example bot built to demonstrate how to integrate and use **[disckit](https://pypi.org/project/disckit/)** in a Python Discord bot project.
 
