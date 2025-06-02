@@ -36,6 +36,7 @@ class UpdateStatus(Enum):
     INVALID_VERSION : str
         Indicates an invalid version format.
     """
+
     UP_TO_DATE = "up_to_date"
     OUTDATED = "outdated"
     AHEAD = "ahead"
@@ -65,6 +66,7 @@ class ColorCode(Enum):
     RESET : str
         Color code to reset terminal color.
     """
+
     GREEN = "\033[92m"
     RED = "\033[91m"
     BLUE = "\033[94m"
@@ -178,6 +180,7 @@ class GitHubAPIError(Exception):
     """
     Custom exception for GitHub API related errors.
     """
+
     pass
 
 
@@ -185,6 +188,7 @@ class VersionParsingError(Exception):
     """
     Custom exception for version parsing errors.
     """
+
     pass
 
 
