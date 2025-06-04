@@ -141,15 +141,15 @@ wheels = [
 
 [[package]]
 name = "disckit"
-version = "1.0.1"
+version = "1.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "discord-py" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/39/ed/0e25b9051aa308babbac485400e706c0acc05318e0200292505fe3c86656/disckit-1.0.1.tar.gz", hash = "sha256:b3c1af078de54857991694865094279b0388eed237e05452a41e7b50bace7fc1", size = 18874, upload-time = "2025-06-03T17:14:16.697Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/72/10900a1f33cbdcf0f0b101970bfc649afc60371e1365b2705245894e65ce/disckit-1.0.2.tar.gz", hash = "sha256:99876a16ca860df51ddd44f077f2850ab91daf7e985ba84bcb216fb31586673e", size = 18868, upload-time = "2025-06-04T12:14:33.976Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/52/84/0ad9aeadac2b7d6c50d833e1a3eb870b69bac5c7b8fdd944c588fefa7a10/disckit-1.0.1-py3-none-any.whl", hash = "sha256:fd8d7ed4e5ba7db4265e7386c36fe33fe40e782d0e17844d7b126f0bd4448573", size = 22976, upload-time = "2025-06-03T17:14:15.597Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/91/94a7b0ee476406e2a5a0fa9712581fc2356c984d7f955f7cf10611290b4e/disckit-1.0.2-py3-none-any.whl", hash = "sha256:799ff24b6b1f4242b36c94c4c56cda2b42576afaac35b350af878aa4ff229ea8", size = 22982, upload-time = "2025-06-04T12:14:32.473Z" },
 ]
 
 [[package]]
@@ -174,7 +174,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "disckit", specifier = "==1.0.1" },
+    { name = "disckit", specifier = "==1.0.2" },
     { name = "discord-py", specifier = ">=2.5.2" },
     { name = "packaging", specifier = ">=25.0" },
     { name = "pyfiglet", specifier = ">=1.0.2" },
