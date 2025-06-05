@@ -162,7 +162,6 @@ dependencies = [
     { name = "packaging" },
     { name = "pyfiglet" },
     { name = "python-dotenv" },
-    { name = "ruff" },
     { name = "typing-extensions" },
 ]
 
@@ -180,7 +179,6 @@ requires-dist = [
     { name = "packaging", specifier = ">=25.0" },
     { name = "pyfiglet", specifier = ">=1.0.2" },
     { name = "python-dotenv", specifier = ">=1.1.0" },
-    { name = "ruff", specifier = "==0.11.12" },
     { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 
@@ -188,7 +186,7 @@ requires-dist = [
 dev = [
     { name = "basedpyright", specifier = ">=1.29.2" },
     { name = "isort", specifier = ">=6.0.1" },
-    { name = "ruff", specifier = ">=0.11.11" },
+    { name = "ruff", specifier = "==0.11.12" },
 ]
 
 [[package]]
