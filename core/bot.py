@@ -49,7 +49,7 @@ class Bot(commands.AutoShardedBot):
         This method handles the synchronization of commands and updates bot-related configurations,
         such as the avatar URL and footer image.
         """
-        # from core.config import SYNC_GUILD_ID
+        # SYNC_GUILD_ID = int(GUILD_ID_HERE)  # Replace with your actual guild ID
         #
         # synced_global = await self.tree.sync()
         # synced_guild = await self.tree.sync(

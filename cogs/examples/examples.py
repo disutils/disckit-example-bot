@@ -1,9 +1,8 @@
 import logging
 
-import discord
 from disckit.cogs import BaseCog
 from disckit.utils import disallow_bots, is_owner, make_autocomplete, sku_check
-from discord import Interaction, app_commands
+from discord import Interaction, app_commands, User
 
 from core import Bot
 
@@ -81,7 +80,7 @@ class Examples(BaseCog, name="Examples"):
     @app_commands.describe(user="The Discord user to check.")
     @disallow_bots()
     async def disallow_bots_example(
-        self, interaction: Interaction, user: discord.User
+        self, interaction: Interaction, user: User
     ) -> None:
         """
         Demonstrate a command that disallows bots.
@@ -90,7 +89,7 @@ class Examples(BaseCog, name="Examples"):
         ----------
         interaction : Interaction
             The Discord interaction.
-        user : discord.User
+        user : User
             The Discord user to check.
         """
         await interaction.response.send_message(f"User: {user.name}")

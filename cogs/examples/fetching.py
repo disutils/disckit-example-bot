@@ -1,6 +1,7 @@
 import logging
 
 import discord
+from discord import Interaction
 from disckit.cogs import BaseCog
 from disckit.utils import (
     MainEmbed,
@@ -44,14 +45,14 @@ class FetchExamples(BaseCog, name="Fetch Examples"):
 
     @fetch_cmds.command()
     async def guild(
-        self, interaction: discord.Interaction, guild_id: str
+        self, interaction: Interaction, guild_id: str
     ) -> None:
         """
         Fetch a guild by its ID.
 
         Parameters
         ----------
-        interaction : discord.Interaction
+        interaction : Interaction
             The interaction object representing the command invocation.
         guild_id : str
             The ID of the guild to fetch.
@@ -82,14 +83,14 @@ class FetchExamples(BaseCog, name="Fetch Examples"):
 
     @fetch_cmds.command()
     async def user(
-        self, interaction: discord.Interaction, user_id: str
+        self, interaction: Interaction, user_id: str
     ) -> None:
         """
         Fetch a user by their ID.
 
         Parameters
         ----------
-        interaction : discord.Interaction
+        interaction : Interaction
             The interaction object representing the command invocation.
         user_id : str
             The ID of the user to fetch.
@@ -119,14 +120,14 @@ class FetchExamples(BaseCog, name="Fetch Examples"):
 
     @fetch_cmds.command()
     async def channel(
-        self, interaction: discord.Interaction, channel_id: str
+        self, interaction: Interaction, channel_id: str
     ) -> None:
         """
         Fetch a channel by its ID.
 
         Parameters
         ----------
-        interaction : discord.Interaction
+        interaction : Interaction
             The interaction object representing the command invocation.
         channel_id : str
             The ID of the channel to fetch.

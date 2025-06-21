@@ -1,6 +1,7 @@
 from typing import override
 
 import discord
+from discord import User, Member, Interaction
 from disckit.utils.embeds import SuccessEmbed
 from disckit.utils.ui import BaseModal
 from discord.ui import View
@@ -18,7 +19,7 @@ class ModalView(BaseModal):
         The timeout duration for the modal, by default None.
     custom_id : str, optional
         The custom ID for the modal, by default "modal_view".
-    author : int or discord.User or discord.Member or None, optional
+    author : int or User or Member or None, optional
         The author of the modal, by default None.
     """
 
@@ -28,7 +29,7 @@ class ModalView(BaseModal):
         title: str = "Default Modal",
         timeout: float | None = None,
         custom_id: str = "modal_view",
-        author: int | discord.User | discord.Member | None = None,
+        author: int | User | Member | None = None,
     ) -> None:
         """
         Initialize the ModalView.
@@ -41,7 +42,7 @@ class ModalView(BaseModal):
             The timeout duration for the modal, by default None.
         custom_id : str, optional
             The custom ID for the modal, by default "modal_view".
-        author : int or discord.User or discord.Member or None, optional
+        author : int or User or Member or None, optional
             The author of the modal, by default None.
         """
         super().__init__(
@@ -56,13 +57,13 @@ class ModalView(BaseModal):
         self.add_item(self.input_field)
 
     @override
-    async def on_submit(self, interaction: discord.Interaction) -> None:
+    async def on_submit(self, interaction: Interaction) -> None:
         """
         Handle the submission of the modal.
 
         Parameters
         ----------
-        interaction : discord.Interaction
+        interaction : Interaction
             The interaction object representing the modal submission.
         """
         user_input: str = self.input_field.value

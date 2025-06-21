@@ -1,7 +1,7 @@
-import discord
+from discord import User, Member, Interaction, ButtonStyle
 from disckit.utils import SuccessEmbed
 from disckit.utils.ui import BaseView
-from discord.ui import View
+from discord.ui import View, Button, button
 
 
 class HomeView(BaseView):
@@ -10,35 +10,35 @@ class HomeView(BaseView):
 
     Parameters
     ----------
-    author : discord.User or discord.Member
+    author : User or Member
         The author of the view.
     """
 
-    def __init__(self, author: discord.User | discord.Member) -> None:
+    def __init__(self, author: User | Member) -> None:
         """
         Initialize the HomeView.
 
         Parameters
         ----------
-        author : discord.User or discord.Member
+        author : User or Member
             The author of the view.
         """
         super().__init__(author=author)
 
-    @discord.ui.button(label="Home View", style=discord.ButtonStyle.primary)
+    @button(label="Home View", style=ButtonStyle.primary)
     async def home_button_callback(
         self,
-        interaction: discord.Interaction,
-        button: discord.ui.Button[View],
+        interaction: Interaction,
+        button: Button[View],
     ) -> None:
         """
         Callback for the home view button.
 
         Parameters
         ----------
-        interaction : discord.Interaction
+        interaction : Interaction
             The interaction object.
-        button : discord.ui.Button[View]
+        button : Button[View]
             The button that was clicked.
         """
         await interaction.response.send_message(
@@ -47,26 +47,26 @@ class HomeView(BaseView):
         )
 
 
-def get_extra_buttons() -> list[discord.ui.Button[View]]:
+def get_extra_buttons() -> list[Button[View]]:
     """
     Generate a list of extra buttons with various styles.
 
     Returns
     -------
-    list[discord.ui.Button[View]]
+    list[Button[View]]
         A list of buttons with different labels and styles.
     """
-    labels: list[str] = list("ABCDEFGHIJKLMNOPQRS")
-    styles: list[discord.ButtonStyle] = [
-        discord.ButtonStyle.primary,
-        discord.ButtonStyle.secondary,
-        discord.ButtonStyle.success,
-        discord.ButtonStyle.danger,
-        discord.ButtonStyle.blurple,
+    labels: list[str] = list("ABCDEFGHIJKLMOP")
+    styles: list[ButtonStyle] = [
+        ButtonStyle.primary,
+        ButtonStyle.secondary,
+        ButtonStyle.success,
+        ButtonStyle.danger,
+        ButtonStyle.blurple,
     ]
 
-    buttons: list[discord.ui.Button[View]] = []
+    buttons: list[Button[View]] = []
     for i, label in enumerate(labels):
         style = styles[i % len(styles)]
-        buttons.append(discord.ui.Button(label=label, style=style))
+        buttons.append(Button(label=label, style=style))
     return buttons
