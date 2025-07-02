@@ -1,7 +1,7 @@
-from discord import User, Member, Interaction, ButtonStyle
 from disckit.utils import SuccessEmbed
 from disckit.utils.ui import BaseView
-from discord.ui import View, Button, button
+from discord import ButtonStyle, Interaction, Member, User
+from discord.ui import Button, View, button
 
 
 class DisableOnClickView(BaseView):
@@ -26,6 +26,7 @@ class DisableOnClickView(BaseView):
         super().__init__(author=author)
 
     button(label="Disable Me!", style=ButtonStyle.danger)
+
     async def disable_button_callback(
         self,
         interaction: Interaction,
@@ -61,9 +62,7 @@ class DisableOnTimeoutView(BaseView):
         The timeout duration in seconds, by default 10.0.
     """
 
-    def __init__(
-        self, author: User | Member, timeout: float = 10.0
-    ) -> None:
+    def __init__(self, author: User | Member, timeout: float = 10.0) -> None:
         """
         Initialize the DisableOnTimeoutView.
 
@@ -76,9 +75,8 @@ class DisableOnTimeoutView(BaseView):
         """
         super().__init__(author=author, timeout=timeout)
 
-    button(
-        label="Click Me Before Timeout!", style=ButtonStyle.primary
-    )
+    button(label="Click Me Before Timeout!", style=ButtonStyle.primary)
+
     async def timeout_button_callback(
         self,
         interaction: Interaction,
@@ -122,6 +120,7 @@ class MultiButtonView(BaseView):
         super().__init__(author=author)
 
     button(label="Disable All", style=ButtonStyle.danger)
+
     async def disable_all_callback(
         self,
         interaction: Interaction,
@@ -145,6 +144,7 @@ class MultiButtonView(BaseView):
         )
 
     button(label="Do Nothing", style=ButtonStyle.secondary)
+
     async def do_nothing_callback(
         self,
         interaction: Interaction,

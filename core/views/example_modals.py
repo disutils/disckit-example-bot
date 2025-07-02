@@ -1,9 +1,9 @@
 from typing import override
 
 import discord
-from discord import User, Member, Interaction
 from disckit.utils.embeds import SuccessEmbed
 from disckit.utils.ui import BaseModal
+from discord import Interaction, Member, User
 from discord.ui import View
 
 

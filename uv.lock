@@ -141,15 +141,11 @@ wheels = [
 
 [[package]]
 name = "disckit"
-version = "1.0.2"
-source = { registry = "https://pypi.org/simple" }
+version = "1.1.0b0"
+source = { git = "https://github.com/disutils/disckit.git?rev=features%2Fhelp_command#bb159de84919e81354f583c64f2766e6fbc3af8d" }
 dependencies = [
     { name = "discord-py" },
     { name = "typing-extensions" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/6d/72/10900a1f33cbdcf0f0b101970bfc649afc60371e1365b2705245894e65ce/disckit-1.0.2.tar.gz", hash = "sha256:99876a16ca860df51ddd44f077f2850ab91daf7e985ba84bcb216fb31586673e", size = 18868, upload-time = "2025-06-04T12:14:33.976Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/e4/91/94a7b0ee476406e2a5a0fa9712581fc2356c984d7f955f7cf10611290b4e/disckit-1.0.2-py3-none-any.whl", hash = "sha256:799ff24b6b1f4242b36c94c4c56cda2b42576afaac35b350af878aa4ff229ea8", size = 22982, upload-time = "2025-06-04T12:14:32.473Z" },
 ]
 
 [[package]]
@@ -174,7 +170,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "disckit", specifier = "==1.0.2" },
+    { name = "disckit", git = "https://github.com/disutils/disckit.git?rev=features%2Fhelp_command" },
     { name = "discord-py", specifier = ">=2.5.2" },
     { name = "packaging", specifier = ">=25.0" },
     { name = "pyfiglet", specifier = ">=1.0.2" },

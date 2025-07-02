@@ -2,10 +2,10 @@ from typing import override
 
 import discord
 from disckit import UtilConfig
+from disckit.utils.mention_tree import MentionTree
 from discord.ext import commands
 
 from core.config import OWNER_IDS, BotData
-from core.mention_tree import MentionTree
 from core.updater import check_bot_updates
 
 
@@ -49,7 +49,7 @@ class Bot(commands.AutoShardedBot):
         This method handles the synchronization of commands and updates bot-related configurations,
         such as the avatar URL and footer image.
         """
-        # SYNC_GUILD_ID = int(GUILD_ID_HERE)  # Replace with your actual guild ID
+        # from core.config import SYNC_GUILD_ID
         #
         # synced_global = await self.tree.sync()
         # synced_guild = await self.tree.sync(

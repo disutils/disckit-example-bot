@@ -17,7 +17,7 @@ class BotData:
         Optional URL for the bot's avatar.
     """
 
-    VERSION: str = "1.0.2a"  # The current version of the bot (currently based on the latest version of disckit)
+    VERSION: str = "1.1.0b"  # The current version of the bot (currently based on the latest version of disckit)
     SUPPORT_SERVER: str = (
         "https://discord.gg/28RuT8WsKT"  # Link to the support server
     )
@@ -56,3 +56,8 @@ LOG_DEBUG: bool = False  # A flag to enable or disable debug mode
 
 # Log Channel
 LOG_CHANNEL: int = 1234  # Replace with the actual channel ID
+
+# Server Configuration
+SYNC_GUILD_ID: int = (
+    1234  # Replace with the actual guild ID for syncing commands
+)

@@ -7,6 +7,7 @@ import discord
 import pyfiglet
 from disckit import CogEnum, UtilConfig
 from disckit.cogs import dis_load_extension
+from disckit.utils import MainEmbed
 from dotenv import load_dotenv
 
 from core import Bot
@@ -17,6 +18,7 @@ from core.config import (
     LOG_CHANNEL,
     MAIN_COLOR,
     SUCCESS_COLOR,
+    SYNC_GUILD_ID,
     BotData,
 )
 from core.emojis import GREEN_CHECK, RED_CROSS
@@ -112,14 +114,35 @@ async def main() -> None:
     UtilConfig.STATUS_COOLDOWN = 600
 
     UtilConfig.BUG_REPORT_CHANNEL = LOG_CHANNEL
-    UtilConfig.OWNER_LIST_URL = (
-        "https://images.disutils.com/bot_assets/assets/owners.txt"
+
+    UtilConfig.OWNER_ONLY_HELP_COGS = ("owner commands",)
+
+    UtilConfig.IGNORE_HELP_COGS = (
+        "owner commands",
+        "help cog",
+        "status handler",
+        "error handler",
+        "owner id handler",
+        "user count handler",
     )
+
+    UtilConfig.OVERVIEW_HELP_EMBED = MainEmbed(
+        title="Bot's Overview",
+        description=(
+            "Welcome to the help overview of the bot.\n"
+            "Use the select menu from below to see the description of different command groups."
+        ),
+    )
+
+    UtilConfig.HELP_OWNER_GUILD_ID = SYNC_GUILD_ID
 
     # Load cogs and extensions
     await load_cogs(bot=bot)
     await dis_load_extension(
-        bot, CogEnum.ERROR_HANDLER, CogEnum.STATUS_HANDLER
+        bot,
+        CogEnum.ERROR_HANDLER,
+        CogEnum.STATUS_HANDLER,
+        CogEnum.HELP_COG,
     )
 
     # Ensure TOKEN is not None

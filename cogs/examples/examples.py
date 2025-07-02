@@ -1,8 +1,14 @@
 import logging
 
 from disckit.cogs import BaseCog
-from disckit.utils import disallow_bots, is_owner, make_autocomplete, sku_check
-from discord import Interaction, app_commands, User
+from disckit.utils import (
+    disallow_bots,
+    is_owner,
+    make_autocomplete,
+    sku_check_guild,
+    sku_check_user,
+)
+from discord import Interaction, User, app_commands
 
 from core import Bot
 
@@ -53,12 +59,12 @@ class Examples(BaseCog, name="Examples"):
         """
         await interaction.response.send_message(f"You selected: {choice}")
 
-    @app_commands.command(name="sku-check")
+    @app_commands.command(name="sku-check-user")
     @app_commands.describe(
         sku_id="The SKU ID of the package to check.",
         user_id="The Discord user ID to check.",
     )
-    async def sku_check_example(
+    async def sku_check_user_example(
         self, interaction: Interaction, sku_id: int, user_id: int
     ) -> None:
         """
@@ -73,8 +79,35 @@ class Examples(BaseCog, name="Examples"):
         user_id : int
             The Discord user ID to check.
         """
-        has_sku = await sku_check(self.bot, sku_id, user_id)
+        has_sku = await sku_check_user(
+            bot=self.bot, sku_id=sku_id, user_id=user_id
+        )
         await interaction.response.send_message(f"User has SKU: {has_sku}")
+
+    @app_commands.command(name="sku-check-guild")
+    @app_commands.describe(
+        sku_id="The SKU ID of the package to check.",
+        guild_id="The Discord user ID to check.",
+    )
+    async def sku_check_guild_example(
+        self, interaction: Interaction, sku_id: int, guild_id: int
+    ) -> None:
+        """
+        Check if a user has a specific SKU.
+
+        Parameters
+        ----------
+        interaction : Interaction
+            The Discord interaction.
+        sku_id : int
+            The SKU ID of the package to check.
+        guild_id : int
+            The Discord guild ID to check.
+        """
+        has_sku = await sku_check_guild(
+            bot=self.bot, sku_id=sku_id, guild_id=guild_id
+        )
+        await interaction.response.send_message(f"Guild has SKU: {has_sku}")
 
     @app_commands.command(name="disallow-bots")
     @app_commands.describe(user="The Discord user to check.")

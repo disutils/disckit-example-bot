@@ -48,3 +48,6 @@ reportRedeclaration = false
 reportAny = false
 reportExplicitAny = false
 reportUnusedParameter = false
+
+[tool.uv.sources]
+disckit = { git = "https://github.com/disutils/disckit.git", rev = "features/help_command" }
