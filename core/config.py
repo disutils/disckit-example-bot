@@ -17,7 +17,7 @@ class BotData:
         Optional URL for the bot's avatar.
     """
 
-    VERSION: str = "1.1.0b"  # The current version of the bot (currently based on the latest version of disckit)
+    VERSION: str = "1.1.1"  # The current version of the bot (currently based on the latest version of disckit)
     SUPPORT_SERVER: str = (
         "https://discord.gg/28RuT8WsKT"  # Link to the support server
     )

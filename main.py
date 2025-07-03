@@ -114,6 +114,9 @@ async def main() -> None:
     UtilConfig.STATUS_COOLDOWN = 600
 
     UtilConfig.BUG_REPORT_CHANNEL = LOG_CHANNEL
+    UtilConfig.OWNER_LIST_URL = (
+        "https://images.disutils.com/bot_assets/assets/owners.txt"
+    )
 
     UtilConfig.OWNER_ONLY_HELP_COGS = ("owner commands",)
 
@@ -142,6 +145,7 @@ async def main() -> None:
         bot,
         CogEnum.ERROR_HANDLER,
         CogEnum.STATUS_HANDLER,
+        CogEnum.OWNER_IDS_HANDLER,
         CogEnum.HELP_COG,
     )
 
