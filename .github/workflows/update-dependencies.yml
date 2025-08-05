@@ -1,0 +1,92 @@
+name: Dependency Update
+
+on:
+  push:
+    branches: [main]  # Run after each push to main branch
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed for pushing changes
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper merging
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install tools
+        run: |
+          pip install uv pip-tools
+
+      - name: Pull latest changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git pull origin main
+
+      - name: Check for dependency updates
+        id: check_updates
+        run: |
+          # Extract dependencies from pyproject.toml
+          DEPS=$(grep -E '^\s+"[^"]+"' pyproject.toml | grep -v "dev =" | sed 's/^\s\+"\(.*\)",\?/\1/' | grep -v "^dev$")
+
+          UPDATED=false
+          CHANGES=""
+
+          # Check each dependency for updates
+          for DEP in $DEPS; do
+            # Extract name and current version
+            NAME=$(echo $DEP | cut -d'>' -f1 | cut -d'=' -f1 | xargs)
+            CURRENT=$(echo $DEP | grep -oP '(>=|==|>)[^,]*' | head -1 | sed 's/^>=\|==\|>//')
+
+            if [ -z "$CURRENT" ] || [ "$CURRENT" = "$NAME" ]; then
+              # Package without version constraint
+              LATEST=$(pip index versions $NAME | grep -oP 'Available versions: \K[^,]+' | xargs)
+              if [ ! -z "$LATEST" ]; then
+                sed -i "s|\"$NAME\"|\"$NAME>=$LATEST\"|g" pyproject.toml
+                UPDATED=true
+                CHANGES="$CHANGES\n- Updated $NAME to $LATEST"
+              fi
+            else
+              # Package with version constraint
+              LATEST=$(pip index versions $NAME | grep -oP 'Available versions: \K[^,]+' | xargs)
+              if [ ! -z "$LATEST" ] && [ "$LATEST" != "$CURRENT" ]; then
+                # Update the dependency
+                if [[ $DEP == *">="* ]]; then
+                  sed -i "s|\"$NAME>=$CURRENT|\"$NAME>=$LATEST|g" pyproject.toml
+                elif [[ $DEP == *"=="* ]]; then
+                  sed -i "s|\"$NAME==$CURRENT|\"$NAME==$LATEST|g" pyproject.toml
+                fi
+                UPDATED=true
+                CHANGES="$CHANGES\n- Updated $NAME from $CURRENT to $LATEST"
+              fi
+            fi
+          done
+
+          echo "updated=$UPDATED" >> $GITHUB_OUTPUT
+          echo "changes<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$CHANGES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Lock dependencies
+        run: uv lock
+
+      - name: Export requirements
+        run: uv export > requirements.txt --no-dev
+
+      - name: Commit and push changes
+        if: steps.check_updates.outputs.updated == 'true'
+        run: |
+          git add pyproject.toml requirements.txt uv.lock
+          git commit -m "Update dependencies
+
+          ${CHANGES}"
+          git push
