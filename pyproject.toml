@@ -10,7 +10,7 @@ dependencies = [
     "packaging>=25.0",
     "pyfiglet>=1.0.3",
     "python-dotenv>=1.1.1",
-    "typing-extensions>=4.14.1",
+    "typing-extensions>=4.14.0",
 ]
 
 [dependency-groups]
