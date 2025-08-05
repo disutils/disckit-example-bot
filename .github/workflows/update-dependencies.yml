@@ -80,7 +80,16 @@ jobs:
         run: uv lock
 
       - name: Export requirements
-        run: uv export > requirements.txt --no-dev
+        run: |
+          uv export > requirements.txt.tmp --no-dev
+          # Ensure UTF-8 encoding
+          python -c "
+          with open('requirements.txt.tmp', 'r') as f_in:
+              content = f_in.read()
+          with open('requirements.txt', 'w', encoding='utf-8') as f_out:
+              f_out.write(content)
+          "
+          rm requirements.txt.tmp
 
       - name: Commit and push changes
         if: steps.check_updates.outputs.updated == 'true'
