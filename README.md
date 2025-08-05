@@ -37,3 +37,6 @@ Then run the bot:
 ```bash
 uv run main.py
 ```
+
+
+![Alt](https://repobeats.axiom.co/api/embed/61f5c0f1f7f4f1443edd806803f2da02ffb59d1c.svg "Repobeats analytics image")
