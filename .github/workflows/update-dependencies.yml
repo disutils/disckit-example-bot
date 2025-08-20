@@ -6,7 +6,7 @@ on:
     paths:
       - 'pyproject.toml'  # Only run on changes to pyproject.toml
   schedule:
-    - cron: '0 0 * * *'  # Run at midnight UTC every day
+    - cron: '0 0 * * 0'  # Run at midnight UTC every Sunday
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
