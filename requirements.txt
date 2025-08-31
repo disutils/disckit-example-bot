@@ -84,13 +84,13 @@ audioop-lts==0.2.1 ; python_full_version >= '3.13' \
     --hash=sha256:fd1345ae99e17e6910f47ce7d52673c6a1a70820d78b67de1b7abb3af29c426a \
     --hash=sha256:ff3f97b3372c97782e9c6d3d7fdbe83bce8f70de719605bd7ee1839cd1ab360a
     # via discord-py
-disckit==1.1.3 \
-    --hash=sha256:11c071b454c78ad04ab679ca3e60c7071237aa05addda349d1f52f30f2afdea9 \
-    --hash=sha256:98cce7ada74ae22542374e3c9a3f081174a5dc529efffcd6d5e893694f064f15
+disckit==1.1.4 \
+    --hash=sha256:ea439f4391b013840c7834b98f15d37f9d6a76ccae91ff2cd27f96a1116290dc \
+    --hash=sha256:fc7ef5376accb3bdd2cc60fd4c07726b06ded1c0f64c861c25121af93e2e2011
     # via disckit-example-bot
-discord-py==2.6.0 \
-    --hash=sha256:3248291c31e69fb1c59b091c378b550cb919b3fb2b38139edd5cd6d9b3013f3f \
-    --hash=sha256:8aa0f017524734653e6ddddb7878e1cdf8c3868bd7d1a386c36cd8373e5fba02
+discord-py==2.6.2 \
+    --hash=sha256:6b257b02ef1a6374a2ddc4cdbfcfa6edbf88674dddeef66800c5d9403b710a2e \
+    --hash=sha256:e3ac5b0353211c831f046a258f4e91c6745ecd544286d29868988ebf7a695d1d
     # via
     #   disckit
     #   disckit-example-bot
@@ -278,9 +278,9 @@ python-dotenv==1.1.1 \
     --hash=sha256:31f23644fe2602f88ff55e1f5c79ba497e01224ee7737937930c448e4d0e24dc \
     --hash=sha256:a8a6399716257f45be6a007360200409fce5cda2661e3dec71d23dc15f6189ab
     # via disckit-example-bot
-typing-extensions==4.14.1 \
-    --hash=sha256:38b39f4aeeab64884ce9f74c94263ef78f3c22467c8724005483154c26648d36 \
-    --hash=sha256:d1e1e3b58374dc93031d6eda2420a48ea44a36c2b4766a4fdeb3710755731d76
+typing-extensions==4.15.0 \
+    --hash=sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466 \
+    --hash=sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548
     # via
     #   disckit
     #   disckit-example-bot
