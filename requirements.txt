@@ -88,9 +88,9 @@ disckit==1.1.4 \
     --hash=sha256:ea439f4391b013840c7834b98f15d37f9d6a76ccae91ff2cd27f96a1116290dc \
     --hash=sha256:fc7ef5376accb3bdd2cc60fd4c07726b06ded1c0f64c861c25121af93e2e2011
     # via disckit-example-bot
-discord-py==2.6.2 \
-    --hash=sha256:6b257b02ef1a6374a2ddc4cdbfcfa6edbf88674dddeef66800c5d9403b710a2e \
-    --hash=sha256:e3ac5b0353211c831f046a258f4e91c6745ecd544286d29868988ebf7a695d1d
+discord-py==2.6.3 \
+    --hash=sha256:69835269d73d9889a2f0efff4c91264a18998db0fdc4295a3c886fe9196dea4e \
+    --hash=sha256:92bb3ef9dbe08525803be1e357bc0191f59ae16956690fc96c34f40bcd02c649
     # via
     #   disckit
     #   disckit-example-bot
