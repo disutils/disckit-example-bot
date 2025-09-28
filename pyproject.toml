@@ -15,9 +15,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "basedpyright>=1.31.4",
+    "basedpyright>=1.31.5",
     "isort>=6.0.1",
-    "ruff==0.13.1",
+    "ruff==0.13.2",
 ]
 
 [tool.isort]
