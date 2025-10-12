@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "disckit>=1.1.4",
-    "discord-py>=2.6.3",
+    "discord-py>=2.6.4",
     "packaging>=25.0",
     "pyfiglet>=1.0.4",
     "python-dotenv>=1.1.1",
@@ -15,9 +15,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "basedpyright>=1.31.6",
+    "basedpyright>=1.31.7",
     "isort>=6.1.0",
-    "ruff==0.13.3",
+    "ruff==0.14.0",
 ]
 
 [tool.isort]
