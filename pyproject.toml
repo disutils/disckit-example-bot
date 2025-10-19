@@ -17,7 +17,7 @@ dependencies = [
 dev = [
     "basedpyright>=1.31.7",
     "isort>=6.1.0",
-    "ruff==0.14.0",
+    "ruff==0.14.1",
 ]
 
 [tool.isort]
