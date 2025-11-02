@@ -9,7 +9,7 @@ dependencies = [
     "discord-py>=2.6.4",
     "packaging>=25.0",
     "pyfiglet>=1.0.4",
-    "python-dotenv>=1.1.1",
+    "python-dotenv>=1.2.1",
     "typing-extensions>=4.15.0",
 ]
 
@@ -17,7 +17,7 @@ dependencies = [
 dev = [
     "basedpyright>=1.32.1",
     "isort>=6.1.0",
-    "ruff==0.14.2",
+    "ruff==0.14.3",
 ]
 
 [tool.isort]
